@@ -15,19 +15,5 @@ int main(){
         cin >> city.second;
     }
 
-    Graph *g = new Graph(num_cities);
-    for(int i = 1; i <= num_cities; ++i){
-        auto cityA = cities.at(i);
-        for(int j = 1; j <= num_cities; ++j){
-            if(i != j){
-                auto cityB = cities.at(j);
-                auto xs = pow(abs(cityB.first - cityA.first),2);
-                auto ys = pow(abs(cityB.second - cityA.second),2);
-                double distance = sqrt(xs + ys);
-                g->add_conection(i, j, distance);
-            }
-        }
-    }
-
     return 0;
 }
