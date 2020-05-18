@@ -1,22 +1,20 @@
 CFLAGS = -O2
 CC = g++
 
-TARGET = build/TravelingSalesman
+SOURCE_PATH = src/
+BUILD_PATH = build/
+OBJ_SUFIX = .o
 
-all: main Point Graph InputManager
-	$(CC) $(CFLAGS) -o $(TARGET) build/main.o build/Point.o build/Graph.o build/InputManager.o
+TARGET = $(BUILD_PATH)TravelingSalesman
 
-main: src/main.cpp src/Point.cpp src/Graph.cpp
-	$(CC) $(CFLAGS) -c src/main.cpp -o build/main.o
+SRC = main Point Graph InputManager
+_SRC = $(addprefix $(BUILD_PATH), $(addsuffix $(OBJ_SUFIX), $(SRC)))
 
-Point: src/Point.cpp
-	$(CC) $(CFLAGS) -c src/Point.cpp -o build/Point.o 
+all: $(_SRC)
+	$(CC) $(CFLAGS) -o $(TARGET) $(_SRC)
 
-Graph: src/Graph.cpp
-	$(CC) $(CFLAGS) -c src/Graph.cpp -o build/Graph.o 
-
-InputManager: src/InputManager.cpp
-	$(CC) $(CFLAGS) -c src/InputManager.cpp -o build/InputManager.o 
+$(BUILD_PATH)%.o: $(SOURCE_PATH)%.cpp
+	$(CC) $(CFLAGS) -c $< -o $@ 
 
 clean:
 	@echo "Cleaning up..."
