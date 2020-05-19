@@ -1,7 +1,9 @@
 #include "../lib/graph.hpp"
+#include <string>
 
 using std::pair;
-using namespace graph;
+using std::string;
+using graph::Graph;
 
 namespace travel_route {
     class TravelRoute {
@@ -17,5 +19,6 @@ namespace travel_route {
             double get_distance();
             double get_fitness();
             void generate_individual();
+            string to_string();
     };
 }

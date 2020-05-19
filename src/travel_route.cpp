@@ -46,4 +46,8 @@ namespace travel_route {
     void TravelRoute::generate_individual(){
         random_shuffle(this->route->begin(), this->route->end());
     }
+
+    string TravelRoute::to_string(){
+
+    }
 }
