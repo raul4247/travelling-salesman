@@ -10,8 +10,8 @@ namespace population {
             Population(int capacity);
             ~Population();
             void save_route(int idx, TravelRoute route);
-            TravelRoute get_route(int idx);
+            TravelRoute& get_route(int idx);
             TravelRoute get_best_route();
-            int length();
+            int size();
     };
 }

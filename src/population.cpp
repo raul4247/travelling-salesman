@@ -15,7 +15,7 @@ namespace population {
         this->routes->at(idx) = route;
     }
 
-    TravelRoute Population::get_route(int idx){
+    TravelRoute& Population::get_route(int idx){
        return this->routes->at(idx);
     }
 
@@ -29,7 +29,7 @@ namespace population {
         return best;
     }
 
-    int Population::length(){
+    int Population::size(){
         return this->routes->size();
     }
 
