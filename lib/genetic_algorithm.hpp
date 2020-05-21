@@ -5,7 +5,7 @@ using population::Population;
 namespace genetic_algorithm {
     class GeneticAlgorithm {
         private:
-            static const double mutation_rate = 0.015;
+            static constexpr double mutation_rate = 0.015;
             static const int tournament_size = 5;
             // Manter a melhor roda a cada chamada de evolve_population
             static const bool elitism = true;

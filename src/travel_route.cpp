@@ -10,7 +10,7 @@ namespace travel_route {
     TravelRoute::TravelRoute(vector<pair<int,int>> cities){
         this->route = new vector<int>(cities.size());
         this->cities_dist = new Graph(cities.size());
-        this->cities = &cities;
+        *this->cities = cities;
 
         for(int i = 0; i < cities.size(); ++i){
             this->route->at(i) = i;
@@ -24,6 +24,21 @@ namespace travel_route {
                 }
             }
         }
+    }
+
+    TravelRoute::TravelRoute(){
+        this->route = nullptr;
+        this->cities_dist = nullptr;
+        this->cities = nullptr;
+    }
+
+    TravelRoute::~TravelRoute(){
+        delete this->route;
+        delete this->cities_dist;
+        delete this->cities;
+        this->route = nullptr;
+        this->cities_dist = nullptr;
+        this->cities = nullptr;
     }
 
     double TravelRoute::get_distance(){
@@ -70,6 +85,9 @@ namespace travel_route {
     void TravelRoute::swap_cities(int route_pos1, int route_pos2){
         auto begin = this->route->begin();
         iter_swap(begin + route_pos1, begin + route_pos2);
+        // Como a rota foi alterada, a distancia deve ser recalculada.
+        this->distance = 0.0;
+        this->fitness = 0.0;
     }
 
     string TravelRoute::to_string(){

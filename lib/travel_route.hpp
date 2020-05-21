@@ -19,6 +19,7 @@ namespace travel_route {
             double distance = 0.0;
         public:
             TravelRoute(vector<pair<int, int>> cities);
+            TravelRoute();
             ~TravelRoute();
             double get_distance();
             double get_fitness();

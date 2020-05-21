@@ -44,11 +44,11 @@ namespace genetic_algorithm {
         // Percorre e adiciona a sub rota em child_cities
         for(int i = 0; i < child_cities.size(); i++){
             if(start_pos < end_pos && i > start_pos && i < end_pos){
-                child_cities.at(i) = &a.get_city(i);
+                *child_cities.at(i) = a.get_city(i);
             }
             else if(start_pos > end_pos){
                 if(!(i < start_pos && i > end_pos)){
-                    child_cities.at(i) = &a.get_city(i);
+                    *child_cities.at(i) = a.get_city(i);
                 }
             }
         }
@@ -56,12 +56,19 @@ namespace genetic_algorithm {
         // Percorre a rota b
         for(int i = 0; i < b.size(); i++){
             // Se child_cities não tiver a cidade da rota b, adiciona
-            auto aux = find(child_cities.begin(), child_cities.end(), b.get_city(i));
-            if(aux == child_cities.end()){
+            bool found = false;
+            auto bcity = b.get_city(i);
+            for(auto city : child_cities){
+                if(*city == bcity){
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
                 // Percorre para encontrar uma posicao vazia em child_cities
                 for(int j = 0; j < child_cities.size(); j++){
                     if(child_cities.at(j) == nullptr) {
-                        child_cities.at(j) = &b.get_city(i);
+                        *child_cities.at(j) = b.get_city(i);
                         break;
                     }
                 }
@@ -92,4 +99,15 @@ namespace genetic_algorithm {
             }
         }
     }
+
+    TravelRoute GeneticAlgorithm::tournament_selection(Population p){
+        Population tournament(tournament_size);
+        for(int i = 0; i < tournament_size; i++){
+            int random_idx = (rand() / RAND_MAX) * p.size();
+            tournament.save_route(0, p.get_route(random_idx));
+        }
+        return tournament.get_best_route();
+    }
+
+
 }
