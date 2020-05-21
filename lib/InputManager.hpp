@@ -2,6 +2,7 @@
 #define INPUT_MANAGER_H
 
 #include "../lib/Point.hpp"
+#include "../lib/Graph.hpp"
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -14,20 +15,17 @@
 #define MAX_N 100
 #define MAX_XY 1000
 
-using namespace std;
-
 namespace TravelingSalesman
 {
-    class InputManager;
-
     class InputManager
     {
     private:
-        static vector<Point> genPoints(int n);
-        static void genRandomInput(int vertexCount);
+        static std::vector<Point> genPoints(int);
+        static void genRandomInput(int);
 
     public:
         static void genAllAllowedRandomInputs();
+        static Graph readGraphInFile(int);
     };
 } 
 #endif

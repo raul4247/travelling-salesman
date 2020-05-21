@@ -4,12 +4,8 @@
 #include <utility>
 #include <math.h>
 
-using namespace std;
-
 namespace TravelingSalesman
 {
-    class Point;
-
     class Point
     {
     private:
@@ -19,7 +15,7 @@ namespace TravelingSalesman
         Point(int, int);
         int getX();
         int getY();
-        pair<int, int> getPair();
+        std::pair<int, int> getPair();
         double distTo(Point);
         friend bool operator==(const Point &p1, const Point &p2)
         {

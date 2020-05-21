@@ -1,5 +1,6 @@
 #include "../lib/Point.hpp"
 
+using namespace std;
 using Point = TravelingSalesman::Point;
 
 Point::Point(int x, int y)
