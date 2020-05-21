@@ -4,6 +4,7 @@ using Timer = TravelingSalesman::Timer;
 using Utils = TravelingSalesman::Utils;
 using BruteForce = TravelingSalesman::BruteForce;
 using BranchAndBound = TravelingSalesman::BranchAndBound;
+using Dynamic = TravelingSalesman::Dynamic;
 using Graph = TravelingSalesman::Graph;
 using TSPResult = TravelingSalesman::TSPResult;
 using InputManager = TravelingSalesman::InputManager;
@@ -162,4 +163,112 @@ void BranchAndBound::runInRange(int begin, int end)
 {
     for (int i = begin; i <= end; i++)
         run(i);
+}
+
+double Dynamic::weigthOfPath(int *path, int size, double **matrix)
+
+{
+    double weight = 0.0;
+
+    for (int i = 1; i < size; i++)
+        weight += matrix[path[i]][path[i - 1]];
+    weight += matrix[path[size - 1]][0];
+
+    return weight;
+}
+
+void Dynamic::start()
+{
+    for(int i=0;i< (1 << size);i++ )
+	{
+		for(int j=0;j<size;j++)
+		{
+			dp[i][j]=-1;
+			minPath[i][j]=-1;		
+		}
+	}
+}
+
+void Dynamic::display_path(int source)
+{
+    int count=0,i=0;
+	int brr[size];
+	for(i=0;i<size;i++)
+	{
+		brr[i]=-1;
+	}
+
+	printf("\n shortest path\t\t: %d ->",source+1);
+	while(count<size-1)
+	{
+		for(i=0;i<(1 << size);i++)
+		{
+			if(minPath[i][source]!=-1 && brr[minPath[i][source]]==-1)
+			{
+				brr[minPath[i][source]]++;
+				source=minPath[i][source];
+				printf(" %d -> ",source+1);
+				count++;
+
+				break;
+			}
+		}
+	}
+	printf("%d\n\n",pos+1);	
+}
+
+double Dynamic::tsd(int visited,int mask,int source){
+    
+    if(mask==visited)
+	{
+		return matrix[source][pos];
+	}
+		
+	else if (dp[mask][source]!=-1)
+	{
+		return dp[mask][source];
+	
+	}
+	
+	double ans=DBL_MAX,minAns=0;
+    int i,k;
+	for(i=0;i<size;i++)
+	{
+
+		if((mask&(1<<i))==0)
+		{
+			minAns=matrix[source][i]+tsd(visited,mask|(1<<i),i);
+			if(ans>minAns)
+			{
+				ans=minAns;				
+				k=i;			
+			}
+		}
+	}
+	
+	minPath[mask][source]=k;
+	return dp[mask][source]=ans;
+}
+
+void Dynamic::runInRange(int begin, int end){
+    for (int i = begin; i <= end; i++)
+        run(i);
+}
+
+void Dynamic::run(int inputSize){
+    int cost = 0, mask,visited = (1 << size) - 1;
+    start();
+    int *graphPath = new int[inputSize];
+    for (int i = 0; i < inputSize; i++)
+        graphPath[i] = i;
+
+    minDist = DBL_MAX;
+
+    Graph graph = InputManager::readGraphInFile(inputSize);
+    matrix = graph.matrix;
+    pos = inputSize;
+    pos--;
+    mask = 1 << pos;
+    cost = tsd(visited,mask,pos);
+    display_path(pos);
 }

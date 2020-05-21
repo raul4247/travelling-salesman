@@ -38,5 +38,22 @@ namespace TravelingSalesman
         void run(int);
         void runInRange(int, int);
     };
+    class Dynamic 
+    {
+        private:
+            double weigthOfPath(int *path, int size, double **matrix);
+            double tsd(int visited,int mask,int source);
+            void start();
+            void display_path(int source);
+        public:
+            double minDist;
+            int **minPath;
+            double **matrix;
+            int size;
+            double **dp;
+            int pos;
+            void run(int);
+            void runInRange(int, int);
+    };
 }
 #endif
