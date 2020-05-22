@@ -3,6 +3,7 @@
 
 using namespace std;
 using namespace graph;
+using namespace travel_route;
 using namespace genetic_algorithm;
 
 int main(){
@@ -18,10 +19,11 @@ int main(){
 
     Population cobaia(50);
 
+
     for(int i = 0; i < 50; i++){
         TravelRoute tr(cities);
-        tr.print();
         tr.generate_individual();
+        tr.print();
         cobaia.save_route(i, tr);
     }
 

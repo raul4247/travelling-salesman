@@ -21,6 +21,7 @@ namespace travel_route {
             vector<pair<int, int>> *cities = nullptr;
             double fitness = 0.0;
             double distance = 0.0;
+
         public:
             TravelRoute(vector<pair<int, int>> cities);
             TravelRoute();
@@ -32,5 +33,7 @@ namespace travel_route {
             void swap_cities(int route_pos1, int route_pos2);
             int size();
             void print();
+            // static random generator, must be inicialized outside
+            static default_random_engine rng;
     };
 }

@@ -38,8 +38,8 @@ namespace genetic_algorithm {
         vector<pair<int,int>*> child_cities(a.size());
 
         // Obtem uma posicao inicial e final de uma sub rota de 'a'
-        int start_pos = ((double) rand() / RAND_MAX) * a.size();
-        int end_pos = ((double) rand() / RAND_MAX) * a.size();
+        int start_pos = rand() % a.size();
+        int end_pos = rand() % a.size();
 
         // Percorre e adiciona a sub rota em child_cities
         for(int i = 0; i < child_cities.size(); i++){
@@ -94,7 +94,7 @@ namespace genetic_algorithm {
         for(int route_pos1 = 0; route_pos1 < tr.size(); route_pos1++){
             // Aplica a taxa de mutação
             if(((double) rand() / RAND_MAX) < mutation_rate){
-                int route_pos2 = ((double) rand() / RAND_MAX) * tr.size();
+                int route_pos2 = rand() % tr.size();
                 tr.swap_cities(route_pos1, route_pos2);
             }
         }
@@ -103,7 +103,7 @@ namespace genetic_algorithm {
     TravelRoute GeneticAlgorithm::tournament_selection(Population p){
         Population tournament(tournament_size);
         for(int i = 0; i < tournament_size; i++){
-            int random_idx = (rand() / RAND_MAX) * p.size();
+            int random_idx = rand() % p.size();
             tournament.save_route(0, p.get_route(random_idx));
         }
         return tournament.get_best_route();

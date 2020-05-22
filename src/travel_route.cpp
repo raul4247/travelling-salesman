@@ -8,6 +8,9 @@ using std::shuffle;
 using std::iter_swap;
 
 namespace travel_route {
+    std::random_device rd {};
+    default_random_engine TravelRoute::rng {rd()};
+
     TravelRoute::TravelRoute(vector<pair<int,int>> cities){
         this->route = new vector<int>(cities.size());
         this->cities_dist = new Graph(cities.size());
@@ -58,8 +61,7 @@ namespace travel_route {
 
     void TravelRoute::generate_individual(){
         if(this->route != nullptr){
-            //shuffle(this->route->begin(), this->route->end(), this->rng);
-            // Como a rota foi alterada, a distancia deve ser recalculada.
+            shuffle(this->route->begin(), this->route->end(), this->rng);
             this->distance = 0.0;
             this->fitness = 0.0;
         }
