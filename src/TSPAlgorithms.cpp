@@ -179,65 +179,69 @@ double Dynamic::weigthOfPath(int *path, int size, double **matrix)
 
 void Dynamic::start()
 {
+    path = new int *[1 << size];
+    dp = new double *[1 << size];
+    for (int i = 0; i < (1<<size); i++)
+    {
+        path[i] = new int[size];
+        dp[i] = new double[size];
+    }
     for(int i=0;i< (1 << size);i++ )
 	{
 		for(int j=0;j<size;j++)
 		{
 			dp[i][j]=-1;
-			minPath[i][j]=-1;		
+			path[i][j]=-1;		
 		}
 	}
 }
 
-void Dynamic::display_path(int source)
+int* Dynamic::display_path(int source)
 {
-    int count=0,i=0;
+	int count=1,i=0;
 	int brr[size];
 	for(i=0;i<size;i++)
 	{
 		brr[i]=-1;
 	}
-
-	printf("\n shortest path\t\t: %d ->",source+1);
-	while(count<size-1)
+    int *arrya = new int[size];
+    arrya[0] = 0;
+	while(count<size)
 	{
 		for(i=0;i<(1 << size);i++)
 		{
-			if(minPath[i][source]!=-1 && brr[minPath[i][source]]==-1)
+			if(path[i][source]!=-1 && brr[path[i][source]]==-1)
 			{
-				brr[minPath[i][source]]++;
-				source=minPath[i][source];
-				printf(" %d -> ",source+1);
+				brr[path[i][source]]++;
+				source=path[i][source];
+                arrya[count] = source;
 				count++;
 
 				break;
 			}
 		}
 	}
-	printf("%d\n\n",pos+1);	
+    return arrya;
 }
 
-double Dynamic::tsd(int visited,int mask,int source){
-    
+double Dynamic::tsd(int mask, int source){
     if(mask==visited)
 	{
 		return matrix[source][pos];
 	}
-		
 	else if (dp[mask][source]!=-1)
 	{
 		return dp[mask][source];
 	
 	}
-	
-	double ans=DBL_MAX,minAns=0;
-    int i,k;
+	double ans=DBL_MAX,minAns=0,k;
+    int i;
 	for(i=0;i<size;i++)
 	{
 
 		if((mask&(1<<i))==0)
 		{
-			minAns=matrix[source][i]+tsd(visited,mask|(1<<i),i);
+			minAns=matrix[source][i]+tsd(mask|(1<<i),i);
 			if(ans>minAns)
 			{
 				ans=minAns;				
@@ -245,9 +249,9 @@ double Dynamic::tsd(int visited,int mask,int source){
 			}
 		}
 	}
-	
-	minPath[mask][source]=k;
-	return dp[mask][source]=ans;
+	path[mask][source]=k;
+    dp[mask][source]=ans;
+	return dp[mask][source];
 }
 
 void Dynamic::runInRange(int begin, int end){
@@ -256,19 +260,20 @@ void Dynamic::runInRange(int begin, int end){
 }
 
 void Dynamic::run(int inputSize){
-    int cost = 0, mask,visited = (1 << size) - 1;
+    size = inputSize;
+    double cost = 0;
+    int mask;
+    visited = (1 << size) - 1;
     start();
-    int *graphPath = new int[inputSize];
-    for (int i = 0; i < inputSize; i++)
-        graphPath[i] = i;
-
-    minDist = DBL_MAX;
-
     Graph graph = InputManager::readGraphInFile(inputSize);
     matrix = graph.matrix;
-    pos = inputSize;
-    pos--;
+    pos = 0;
     mask = 1 << pos;
-    cost = tsd(visited,mask,pos);
-    display_path(pos);
+    Timer timer;
+    timer.start();
+    cout << inputSize << endl ;
+    cost = tsd(mask,pos);
+    TSPResult result(inputSize, cost, display_path(0), timer.stop());
+    result.showResult("Dynamic Programming");
+
 }

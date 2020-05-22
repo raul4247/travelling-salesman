@@ -42,16 +42,18 @@ namespace TravelingSalesman
     {
         private:
             double weigthOfPath(int *path, int size, double **matrix);
-            double tsd(int visited,int mask,int source);
+            double tsd(int mask, int pos);
             void start();
-            void display_path(int source);
+            int* display_path(int source);
         public:
             double minDist;
-            int **minPath;
+            int **path;
+            double minPath;
             double **matrix;
             int size;
             double **dp;
             int pos;
+            int visited;
             void run(int);
             void runInRange(int, int);
     };
