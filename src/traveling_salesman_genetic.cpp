@@ -19,11 +19,9 @@ int main(){
 
     Population cobaia(50);
 
-
     for(int i = 0; i < 50; i++){
         TravelRoute tr(cities);
         tr.generate_individual();
-        tr.print();
         cobaia.save_route(i, tr);
     }
 
