@@ -14,7 +14,7 @@ namespace graph {
             ~Graph();
             void display();
             int get_vertices();
-            int get_conection(int v1, int v2);
+            double get_conection(int v1, int v2);
             void add_conection(int v1, int v2, double value);
             void del_conection(int v1, int v2);
     };

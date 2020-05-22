@@ -20,12 +20,14 @@ int main(){
 
     for(int i = 0; i < 50; i++){
         TravelRoute tr(cities);
+        tr.print();
         tr.generate_individual();
         cobaia.save_route(i, tr);
     }
 
     cout << "distancia inicial: " << cobaia.get_best_route().get_distance() << endl;
 
+    cobaia = GeneticAlgorithm::evolve_population(cobaia);
     // Evolui a cobaia por 100 geracoes
     for(int i = 0; i <= 100; i++){
         cobaia = GeneticAlgorithm::evolve_population(cobaia);
@@ -33,7 +35,7 @@ int main(){
 
 
     cout << "resultado: " << cobaia.get_best_route().get_distance() << endl;
-    cout << cobaia.get_best_route().to_string() << endl;
+    cobaia.get_best_route().print();
 
     return 0;
 }

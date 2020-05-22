@@ -8,7 +8,6 @@ namespace population {
             vector<TravelRoute> *routes;
         public:
             Population(int capacity);
-            ~Population();
             void save_route(int idx, TravelRoute route);
             TravelRoute& get_route(int idx);
             TravelRoute get_best_route();

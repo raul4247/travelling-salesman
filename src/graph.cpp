@@ -39,7 +39,7 @@ namespace graph {
         }
     }
 
-    int Graph::get_conection(int v1, int v2){
+    double Graph::get_conection(int v1, int v2){
         return this->matrix_adj->at(v1).at(v2);
     }
 

@@ -35,7 +35,7 @@ namespace genetic_algorithm {
     }
 
     TravelRoute GeneticAlgorithm::crossover(TravelRoute a, TravelRoute b){
-        vector<pair<int,int>*> child_cities(a.size(), nullptr);
+        vector<pair<int,int>*> child_cities(a.size());
 
         // Obtem uma posicao inicial e final de uma sub rota de 'a'
         int start_pos = ((double) rand() / RAND_MAX) * a.size();
@@ -44,11 +44,11 @@ namespace genetic_algorithm {
         // Percorre e adiciona a sub rota em child_cities
         for(int i = 0; i < child_cities.size(); i++){
             if(start_pos < end_pos && i > start_pos && i < end_pos){
-                *child_cities.at(i) = a.get_city(i);
+                child_cities.at(i) = new pair<int,int>(a.get_city(i));
             }
             else if(start_pos > end_pos){
                 if(!(i < start_pos && i > end_pos)){
-                    *child_cities.at(i) = a.get_city(i);
+                    child_cities.at(i) = new pair<int,int>(a.get_city(i));
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace genetic_algorithm {
             bool found = false;
             auto bcity = b.get_city(i);
             for(auto city : child_cities){
-                if(*city == bcity){
+                if(city != nullptr && *city == bcity){
                     found = true;
                     break;
                 }
@@ -68,7 +68,7 @@ namespace genetic_algorithm {
                 // Percorre para encontrar uma posicao vazia em child_cities
                 for(int j = 0; j < child_cities.size(); j++){
                     if(child_cities.at(j) == nullptr) {
-                        *child_cities.at(j) = b.get_city(i);
+                        child_cities.at(j) = new pair<int,int>(b.get_city(i));
                         break;
                     }
                 }

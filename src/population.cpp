@@ -6,11 +6,6 @@ namespace population {
         this->routes = new vector<TravelRoute>(capacity);
     }
 
-    Population::~Population(){
-        delete this->routes;
-        this->routes = nullptr;
-    }
-
     void Population::save_route(int idx, TravelRoute route){
         this->routes->at(idx) = route;
     }
