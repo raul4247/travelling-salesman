@@ -33,7 +33,7 @@ int main(){
 
     cobaia = GeneticAlgorithm::evolve_population(cobaia);
     // Evolui a cobaia por 100 geracoes
-    for(int i = 0; i <= 10; i++){
+    for(int i = 0; i < 100; i++){
         cobaia = GeneticAlgorithm::evolve_population(cobaia);
     }
 
