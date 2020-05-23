@@ -3,23 +3,25 @@
 
 #include <chrono>
 
+using namespace std::chrono;
+
 namespace TravelingSalesman
 {
     class Timer
     {
-    public:
-        std::chrono::high_resolution_clock::time_point begin, end;
+        public:
+            high_resolution_clock::time_point begin, end;
 
-        void start()
-        {
-            Timer::begin = std::chrono::high_resolution_clock::now();
-        }
+            void start()
+            {
+                Timer::begin = high_resolution_clock::now();
+            }
 
-        long long stop()
-        {
-            Timer::end = std::chrono::high_resolution_clock::now();
-            return std::chrono::duration_cast<std::chrono::microseconds>(Timer::end - Timer::begin).count();
-        }
+            long long stop()
+            {
+                Timer::end = high_resolution_clock::now();
+                return duration_cast<microseconds>(Timer::end - Timer::begin).count();
+            }
     };
 }
 

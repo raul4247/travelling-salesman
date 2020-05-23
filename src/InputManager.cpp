@@ -28,7 +28,7 @@ void InputManager::genRandomInput(int vertexCount)
     if (vertexCount <= 0 || vertexCount > MAX_N)
     {
         cout << "Exception: vertexCount invalid in generateRandomInput"
-             << "\n";
+            << "\n";
         return;
     }
 

@@ -4,23 +4,25 @@
 #include <utility>
 #include <math.h>
 
+using std::pair;
+
 namespace TravelingSalesman
 {
     class Point
     {
-    private:
-        int x, y;
+        private:
+            int x, y;
 
-    public:
-        Point(int, int);
-        int getX();
-        int getY();
-        std::pair<int, int> getPair();
-        double distTo(Point);
-        friend bool operator==(const Point &p1, const Point &p2)
-        {
-            return (p1.x == p2.x) && (p1.y == p2.y);
-        }
+        public:
+            Point(int, int);
+            int getX();
+            int getY();
+            pair<int, int> getPair();
+            double distTo(Point);
+            friend bool operator==(const Point &p1, const Point &p2)
+            {
+                return (p1.x == p2.x) && (p1.y == p2.y);
+            }
     };
 }
 

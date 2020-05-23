@@ -1,24 +1,16 @@
 #include <bits/stdc++.h>
+#include <chrono>
 #include "../lib/Utils.hpp"
 #include "../lib/Graph.hpp"
 #include "../lib/Point.hpp"
 #include "../lib/TSPAlgorithms.hpp"
 #include "../lib/InputManager.hpp"
-#include <chrono> 
 #include "../lib/Utils.hpp"
-
-using Utils = TravelingSalesman::Utils;
 
 #define INPUT_FILE_PATH(n) ("../inputs/vertices_" + n + ".in")
 
 using namespace std;
-using namespace std::chrono; 
-using Point = TravelingSalesman::Point;
-using Graph = TravelingSalesman::Graph;
-using BruteForce = TravelingSalesman::BruteForce;
-using BranchAndBound = TravelingSalesman::BranchAndBound;
-using InputManager = TravelingSalesman::InputManager;
-
+using namespace TravelingSalesman;
 
 int main(int argc, char *argv[])
 {
@@ -35,23 +27,23 @@ int main(int argc, char *argv[])
         cin >> op;
         switch (op)
         {
-        case '1':
-        {
-            InputManager::genAllAllowedRandomInputs();
-            break;
-        }
-        case '2':
-        {
-            BruteForce bruteForce;
-            bruteForce.runInRange(1, 100);
-            break;
-        }
-        case '3':
-        {
-            BranchAndBound branchAndBound;
-            branchAndBound.runInRange(1, 100);
-            break;
-        }
+            case '1':
+                {
+                    InputManager::genAllAllowedRandomInputs();
+                    break;
+                }
+            case '2':
+                {
+                    BruteForce bruteForce;
+                    bruteForce.runInRange(1, 100);
+                    break;
+                }
+            case '3':
+                {
+                    BranchAndBound branchAndBound;
+                    branchAndBound.runInRange(1, 100);
+                    break;
+                }
         }
     } while (op != '0');
 

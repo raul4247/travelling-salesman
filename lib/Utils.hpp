@@ -5,9 +5,9 @@ namespace TravelingSalesman
 {
     class Utils
     {
-    public:
-        static int *copyArr(int *, int);
+        public:
+            static int *copyArr(int *, int);
     };
-} 
+}
 
 #endif
