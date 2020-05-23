@@ -122,7 +122,7 @@ namespace genetic
         if(this->route != nullptr)
         {
             for(auto &city : *this->route)
-                std::cout << city + 1 << " ";
+                std::cout << city << " ";
             std::cout << std::endl;
         }
     }

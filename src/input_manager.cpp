@@ -80,7 +80,7 @@ namespace traveling_salesman
         int n;
         input_file >> n;
 
-        vector<City> cities(n);
+        vector<City> cities;
         for (int i = 0; i < n; i++)
         {
             City c;

@@ -269,7 +269,6 @@ namespace traveling_salesman
         mask = 1 << pos;
         Timer timer;
         timer.start();
-        cout << input_size << endl ;
         cost = tsd(mask,pos);
         TSPResult result(input_size, cost, display_path(0), timer.stop());
         result.show_result("dynamic_programming");
