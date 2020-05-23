@@ -1,9 +1,11 @@
-#ifndef TIMER
-#define TIMER
+#ifndef TIMER_H
+#define TIMER_H
 
 #include <chrono>
 
-using namespace std::chrono;
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::microseconds;
 
 namespace traveling_salesman
 {
@@ -24,4 +26,4 @@ namespace traveling_salesman
     };
 }
 
-#endif
+#endif // TIMER_H

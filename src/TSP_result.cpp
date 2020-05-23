@@ -1,42 +1,48 @@
 #include "../lib/TSP_result.hpp"
+#define llong long long
 
+using std::cout;
+using std::fixed;
+using std::setprecision;
+using std::ofstream;
+using std::ios;
 namespace traveling_salesman
 {
-    TSPResult::TSPResult(int inputSize, double minDist, int *minPath, long long timeTakenInMicroseconds)
+    TSPResult::TSPResult(int input_size, double min_dist, int *min_path, llong time_taken_in_microseconds)
     {
-        this->inputSize = inputSize;
-        this->minDist = minDist;
-        this->minPath = minPath;
-        this->timeTakenInMicroseconds = timeTakenInMicroseconds;
+        this->input_size = input_size;
+        this->min_dist = min_dist;
+        this->min_path = min_path;
+        this->time_taken_in_microseconds = time_taken_in_microseconds;
     }
 
-    void TSPResult::showResult(string algorithmName)
+    void TSPResult::show_result(string algorithm_name)
     {
-        cout << algorithmName << "\n";
-        cout << "Input size: " << inputSize << "\n";
-        cout << "Min dist: " << minDist << "\n";
+        cout << algorithm_name << "\n";
+        cout << "Input size: " << input_size << "\n";
+        cout << "Min dist: " << min_dist << "\n";
         cout << "Min path: ";
-        for (int i = 0; i < inputSize; i++)
-            cout << minPath[i] << " ";
+        for (int i = 0; i < input_size; i++)
+            cout << min_path[i] << " ";
 
-        if (timeTakenInMicroseconds < 1000)
-            cout << "\nTime taken: " << timeTakenInMicroseconds << " microseconds\n\n";
+        if (time_taken_in_microseconds < 1000)
+            cout << "\nTime taken: " << time_taken_in_microseconds << " microseconds\n\n";
         else
         {
-            if (timeTakenInMicroseconds > 1000000)
+            if (time_taken_in_microseconds > 1000000)
             {
-                if (timeTakenInMicroseconds > 60000000)
-                    cout << "\nTime taken: " << std::fixed << std::setprecision(4) << (timeTakenInMicroseconds / 60000000.0) << " minutes\n\n";
+                if (time_taken_in_microseconds > 60000000)
+                    cout << "\nTime taken: " << fixed << setprecision(4) << (time_taken_in_microseconds / 60000000.0) << " minutes\n\n";
                 else
-                    cout << "\nTime taken: " << std::fixed << std::setprecision(4) << (timeTakenInMicroseconds / 1000000.0) << " seconds\n\n";
+                    cout << "\nTime taken: " << fixed << setprecision(4) << (time_taken_in_microseconds / 1000000.0) << " seconds\n\n";
             }
             else
-                cout << "\nTime taken: " << std::fixed << std::setprecision(4) << (timeTakenInMicroseconds / 1000.0) << " miliseconds\n\n";
+                cout << "\nTime taken: " << fixed << setprecision(4) << (time_taken_in_microseconds / 1000.0) << " miliseconds\n\n";
         }
 
         ofstream outputFile;
-        outputFile.open(OUTPUT_FILE_PATH(algorithmName), ios::out | ios::app);
-        outputFile << inputSize << ", " << std::fixed << std::setprecision(7) << (timeTakenInMicroseconds / 1000000.0) << '\n';
+        outputFile.open(OUTPUT_FILE_PATH(algorithm_name), ios::out | ios::app);
+        outputFile << input_size << ", " << std::fixed << std::setprecision(7) << (time_taken_in_microseconds / 1000000.0) << '\n';
         outputFile.close();
     }
 

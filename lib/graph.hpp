@@ -5,7 +5,6 @@
 #include "../lib/point.hpp"
 
 using std::vector;
-
 namespace traveling_salesman
 {
     class Graph
