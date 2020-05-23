@@ -10,11 +10,13 @@ int main(){
     int num_cities {};
 
     cin >> num_cities;
-    vector<pair<int,int>> cities(num_cities);
+    vector<City> cities(num_cities);
 
+    int id = 0;
     for(auto &city : cities){
-        cin >> city.first;
-        cin >> city.second;
+        cin >> city.coord.first;
+        cin >> city.coord.second;
+        city.id = id++;
     }
 
     Population cobaia(50);
@@ -25,17 +27,20 @@ int main(){
         cobaia.save_route(i, tr);
     }
 
-    cout << "distancia inicial: " << cobaia.get_best_route().get_distance() << endl;
+    TravelRoute best = cobaia.get_best_route();
+
+    cout << "distancia inicial: " << best.get_distance() << endl;
 
     cobaia = GeneticAlgorithm::evolve_population(cobaia);
     // Evolui a cobaia por 100 geracoes
-    for(int i = 0; i <= 100; i++){
+    for(int i = 0; i <= 10; i++){
         cobaia = GeneticAlgorithm::evolve_population(cobaia);
     }
 
-
-    cout << "resultado: " << cobaia.get_best_route().get_distance() << endl;
-    cobaia.get_best_route().print();
+    best = cobaia.get_best_route();
+    cout << "resultado: " << best.get_distance() << endl;
+    best.print_order();
+    best.print_cities();
 
     return 0;
 }

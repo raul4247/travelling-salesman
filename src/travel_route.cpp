@@ -11,17 +11,17 @@ namespace travel_route {
     std::random_device rd {};
     default_random_engine TravelRoute::rng {rd()};
 
-    TravelRoute::TravelRoute(vector<pair<int,int>> cities){
+    TravelRoute::TravelRoute(vector<City> cities){
         this->route = new vector<int>(cities.size());
         this->cities_dist = new Graph(cities.size());
-        this->cities = new vector<pair<int,int>>(cities);
+        this->cities = new vector<City>(cities);
 
         for(int i = 0; i < cities.size(); ++i){
-            this->route->at(i) = i;
-            auto cityA = cities.at(i);
+            this->route->at(i) = cities.at(i).id;
+            auto cityA = cities.at(i).coord;
             for(int j = 0; j < cities.size(); ++j){
                 if(i != j){
-                    auto cityB = cities.at(j);
+                    auto cityB = cities.at(j).coord;
                     double xs = pow(cityB.first - cityA.first,2);
                     double ys = pow(cityB.second - cityA.second,2);
                     this->cities_dist->add_conection(i, j, sqrt(xs + ys));
@@ -61,17 +61,17 @@ namespace travel_route {
 
     void TravelRoute::generate_individual(){
         if(this->route != nullptr){
-            shuffle(this->route->begin(), this->route->end(), this->rng);
+            shuffle(this->route->begin() += 1, this->route->end(), this->rng);
             this->distance = 0.0;
             this->fitness = 0.0;
         }
     }
 
-    bool TravelRoute::contains_city(pair<int,int> city){
+    bool TravelRoute::contains_city(City city){
         bool contains = false;
         if(this->cities != nullptr){
             for(auto c : *this->cities){
-                if(c == city){
+                if(c.id == city.id){
                     contains = true;
                     break;
                 }
@@ -80,7 +80,7 @@ namespace travel_route {
         return contains;
     }
 
-    pair<int,int> TravelRoute::get_city(int route_position){
+    City TravelRoute::get_city(int route_position){
         return this->cities->at(this->route->at(route_position));
     }
 
@@ -102,10 +102,19 @@ namespace travel_route {
         }
     }
 
-    void TravelRoute::print(){
+    void TravelRoute::print_order(){
         if(this->route != nullptr){
-            for(auto const &city : *this->route){
+            for(auto &city : *this->route){
                 std::cout << city + 1 << " ";
+            }
+            std::cout << std::endl;
+        }
+    }
+
+    void TravelRoute::print_cities(){
+        if(this->cities != nullptr){
+            for(auto &city : *this->cities){
+                std::cout << "(" << city.coord.first << ", " << city.coord.second << ")" << ", ";
             }
             std::cout << std::endl;
         }

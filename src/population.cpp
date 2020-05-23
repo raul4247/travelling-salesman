@@ -15,7 +15,7 @@ namespace population {
     }
 
     TravelRoute Population::get_best_route(){
-        TravelRoute best = this->routes->front();
+        TravelRoute best = this->routes->at(0);
         for(auto route: *this->routes){
             if(route.get_fitness() >= best.get_fitness()){
                 best = route;

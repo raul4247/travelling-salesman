@@ -1,6 +1,7 @@
 #include "../lib/travel_route.hpp"
 
 using travel_route::TravelRoute;
+using travel_route::City;
 
 namespace population {
     class Population {

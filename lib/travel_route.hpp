@@ -10,6 +10,12 @@ using std::default_random_engine;
 using graph::Graph;
 
 namespace travel_route {
+    class City {
+        public:
+            int id;
+            pair<int, int> coord;
+    };
+
     class TravelRoute {
         private:
             // Vetor que armanena a rota a ser percorrida
@@ -18,21 +24,22 @@ namespace travel_route {
             // Grafo que armazena a distancia para cada cidade
             Graph *cities_dist = nullptr;
             // Vetor que armanena as cidades correspondentes a rota.
-            vector<pair<int, int>> *cities = nullptr;
+            vector<City> *cities = nullptr;
             double fitness = 0.0;
             double distance = 0.0;
 
         public:
-            TravelRoute(vector<pair<int, int>> cities);
+            TravelRoute(vector<City> cities);
             TravelRoute();
             double get_distance();
             double get_fitness();
             void generate_individual();
-            bool contains_city(pair<int,int> city);
-            pair<int, int> get_city(int route_position);
+            bool contains_city(City city);
+            City get_city(int route_position);
             void swap_cities(int route_pos1, int route_pos2);
             int size();
-            void print();
+            void print_order();
+            void print_cities();
             // static random generator, must be inicialized outside
             static default_random_engine rng;
     };

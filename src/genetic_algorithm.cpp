@@ -36,7 +36,7 @@ namespace genetic_algorithm {
     }
 
     TravelRoute GeneticAlgorithm::crossover(TravelRoute a, TravelRoute b){
-        vector<pair<int,int>*> child_cities(a.size(), nullptr);
+        vector<City*> child_cities(a.size(), nullptr);
 
         // Obtem uma posicao inicial e final de uma sub rota de 'a'
         int start_pos = rand() % a.size();
@@ -45,11 +45,11 @@ namespace genetic_algorithm {
         // Percorre e adiciona a sub rota em child_cities
         for(int i = 0; i < child_cities.size(); i++){
             if(start_pos < end_pos && i > start_pos && i < end_pos){
-                child_cities.at(i) = new pair<int,int>(a.get_city(i));
+                child_cities.at(i) = new City(a.get_city(i));
             }
             else if(start_pos > end_pos){
                 if(!(i < start_pos && i > end_pos)){
-                    child_cities.at(i) = new pair<int,int>(a.get_city(i));
+                    child_cities.at(i) = new City(a.get_city(i));
                 }
             }
         }
@@ -58,9 +58,9 @@ namespace genetic_algorithm {
         for(int i = 0; i < b.size(); i++){
             // Se child_cities não tiver a cidade da rota b, adiciona
             bool found = false;
-            auto bcity = b.get_city(i);
+            City bcity = b.get_city(i);
             for(auto city : child_cities){
-                if(city != nullptr && *city == bcity){
+                if(city != nullptr && city->id == bcity.id){
                     found = true;
                     break;
                 }
@@ -69,7 +69,7 @@ namespace genetic_algorithm {
                 // Percorre para encontrar uma posicao vazia em child_cities
                 for(int j = 0; j < child_cities.size(); j++){
                     if(child_cities.at(j) == nullptr) {
-                        child_cities.at(j) = new pair<int,int>(b.get_city(i));
+                        child_cities.at(j) = new City(b.get_city(i));
                         break;
                     }
                 }
@@ -77,11 +77,13 @@ namespace genetic_algorithm {
         }
 
         // Cria novo vector, dessa vez sem pointer.
-        vector<pair<int,int>> final(child_cities.size());
+        vector<City> final;
         for(int i = 0; i < child_cities.size(); i++){
             auto aux = child_cities.at(i);
             if(aux != nullptr){
                 final.push_back(*aux);
+                delete aux;
+                aux = nullptr;
             }
         }
 
