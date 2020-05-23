@@ -1,3 +1,5 @@
+#ifndef GENETIC_ALGORITHM_H
+#define GENETIC_ALGORITHM_H
 #include "../lib/population.hpp"
 
 using population::Population;
@@ -16,3 +18,4 @@ namespace genetic_algorithm {
             static TravelRoute tournament_selection(Population p);
     };
 }
+#endif // GENETIC_ALGORITHM_H

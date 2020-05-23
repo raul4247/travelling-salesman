@@ -1,3 +1,6 @@
+#ifndef GRAPH_H
+#define GRAPH_H
+
 #include <list>
 #include <vector>
 #include <cmath>
@@ -19,3 +22,4 @@ namespace graph {
             void del_conection(int v1, int v2);
     };
 }
+#endif // GRAPH_H

@@ -1,3 +1,6 @@
+#ifndef POPULATION_H
+#define POPULATION_H
+
 #include "../lib/travel_route.hpp"
 
 using travel_route::TravelRoute;
@@ -15,3 +18,4 @@ namespace population {
             int size();
     };
 }
+#endif // POPULATION_H

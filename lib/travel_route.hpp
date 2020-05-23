@@ -1,3 +1,6 @@
+#ifndef TRAVEL_ROUTE_H
+#define TRAVEL_ROUTE_H
+
 #include "../lib/graph.hpp"
 #include <string>
 #include <random>
@@ -45,3 +48,4 @@ namespace travel_route {
             static default_random_engine rng;
     };
 }
+#endif // TRAVEL_ROUTE_H
