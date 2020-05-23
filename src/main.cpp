@@ -15,6 +15,7 @@ using Point = TravelingSalesman::Point;
 using Graph = TravelingSalesman::Graph;
 using BruteForce = TravelingSalesman::BruteForce;
 using BranchAndBound = TravelingSalesman::BranchAndBound;
+using Dynamic = TravelingSalesman::Dynamic;
 using InputManager = TravelingSalesman::InputManager;
 
 
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
         cout << "1. Gen random inputs [1..100]\n";
         cout << "2. Brute Force through inputs[1..100]\n";
         cout << "3. Branch and Bound through inputs[1..100]\n\n";
+        cout << "4. Dynamic through inputs[1..100]\n\n";
         cout << "0. Exit\n\n";
         cout << "OP: ";
 
@@ -50,6 +52,10 @@ int main(int argc, char *argv[])
             branchAndBound.runInRange(1, 100);
             break;
         }
+        case '4':
+            Dynamic dynamic;
+            dynamic.runInRange(1,100);
+            break;
         }
     } while (op != '0');
 
