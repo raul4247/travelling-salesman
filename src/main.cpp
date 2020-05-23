@@ -9,8 +9,6 @@
 
 using Utils = TravelingSalesman::Utils;
 
-#define INPUT_FILE_PATH(n) ("../inputs/vertices_" + n + ".in")
-
 using namespace std;
 using namespace std::chrono; 
 using Point = TravelingSalesman::Point;

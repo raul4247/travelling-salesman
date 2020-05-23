@@ -1,6 +1,7 @@
 #ifndef TSP_RESULT
 #define TSP_RESULT
 
+#include "../lib/InputManager.hpp"
 #include <iostream>
 #include <iomanip>
 #include <string>

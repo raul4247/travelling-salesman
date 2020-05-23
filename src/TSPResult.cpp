@@ -34,4 +34,9 @@ void TSPResult::showResult(string algorithmName)
         else
             cout << "\nTime taken: " << std::fixed << std::setprecision(4) << (timeTakenInMicroseconds / 1000.0) << " miliseconds\n\n";
     }
+
+    ofstream outputFile;
+    outputFile.open(OUTPUT_FILE_PATH(algorithmName), ios::out | ios::app);
+    outputFile << inputSize << ", " << std::fixed << std::setprecision(7) << (timeTakenInMicroseconds / 1000000.0) << '\n';
+    outputFile.close();
 }
