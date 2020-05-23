@@ -8,7 +8,7 @@ OBJ_SUFIX = .o
 NAME = TravelingSalesman
 TARGET = $(BUILD_PATH)$(NAME)
 
-SRC = traveling_salesman_genetic travel_route population graph genetic_algorithm
+SRC = main Point Graph InputManager Utils TSPAlgorithms TSPResult
 _SRC = $(addprefix $(BUILD_PATH), $(addsuffix $(OBJ_SUFIX), $(SRC)))
 
 all: $(_SRC)
