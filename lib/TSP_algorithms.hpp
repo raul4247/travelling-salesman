@@ -38,5 +38,25 @@ namespace traveling_salesman
             void run(int);
             void run_in_range(int, int);
     };
+
+    class Dynamic
+    {
+        private:
+            double weigth_of_path(int *path, int size, double **matrix);
+            double tsd(int mask, int pos);
+            void start();
+            int* display_path(int source);
+        public:
+            double min_dist;
+            int **path;
+            double min_path;
+            double **matrix;
+            int size;
+            double **dp;
+            int pos;
+            int visited;
+            void run(int);
+            void run_in_range(int, int);
+    };
 }
 #endif // TSP_ALGORITHMS_H

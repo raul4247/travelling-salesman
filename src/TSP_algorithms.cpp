@@ -158,4 +158,119 @@ namespace traveling_salesman
             run(i);
     }
 
+    double Dynamic::weigth_of_path(int *path, int size, double **matrix)
+    {
+        double weight = 0.0;
+
+        for (int i = 1; i < size; i++)
+            weight += matrix[path[i]][path[i - 1]];
+        weight += matrix[path[size - 1]][0];
+
+        return weight;
+    }
+
+    void Dynamic::start()
+    {
+        path = new int *[1 << size];
+        dp = new double *[1 << size];
+        for (int i = 0; i < (1<<size); i++)
+        {
+            path[i] = new int[size];
+            dp[i] = new double[size];
+        }
+        for(int i=0;i< (1 << size);i++ )
+        {
+            for(int j=0;j<size;j++)
+            {
+                dp[i][j]=-1;
+                path[i][j]=-1;
+            }
+        }
+    }
+
+    int* Dynamic::display_path(int source)
+    {
+        int count=1,i=0;
+        int brr[size];
+        for(i=0;i<size;i++)
+        {
+            brr[i]=-1;
+        }
+        int *arrya = new int[size];
+        arrya[0] = 0;
+        while(count<size)
+        {
+            for(i=0;i<(1 << size);i++)
+            {
+                if(path[i][source]!=-1 && brr[path[i][source]]==-1)
+                {
+                    brr[path[i][source]]++;
+                    source=path[i][source];
+                    arrya[count] = source;
+                    count++;
+
+                    break;
+                }
+            }
+        }
+        return arrya;
+    }
+
+    double Dynamic::tsd(int mask, int source)
+    {
+        if(mask==visited)
+        {
+            return matrix[source][pos];
+        }
+        else if (dp[mask][source]!=-1)
+        {
+            return dp[mask][source];
+
+        }
+        double ans=DBL_MAX, minAns=0, k;
+        int i;
+        for(i=0;i<size;i++)
+        {
+
+            if((mask&(1<<i))==0)
+            {
+                minAns=matrix[source][i]+tsd(mask|(1<<i),i);
+                if(ans>minAns)
+                {
+                    ans=minAns;
+                    k=i;
+                }
+            }
+        }
+        path[mask][source]=k;
+        dp[mask][source]=ans;
+        return dp[mask][source];
+    }
+
+    void Dynamic::run_in_range(int begin, int end)
+    {
+        for (int i = begin; i <= end; i++)
+            run(i);
+    }
+
+    void Dynamic::run(int input_size)
+    {
+        size = input_size;
+        double cost = 0;
+        int mask;
+        visited = (1 << size) - 1;
+        start();
+        Graph graph = InputManager::read_graph_in_file(input_size);
+        matrix = graph.matrix;
+        pos = 0;
+        mask = 1 << pos;
+        Timer timer;
+        timer.start();
+        cout << input_size << endl ;
+        cost = tsd(mask,pos);
+        TSPResult result(input_size, cost, display_path(0), timer.stop());
+        result.show_result("dynamic_programming");
+
+    }
+
 }
