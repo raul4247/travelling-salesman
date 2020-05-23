@@ -5,6 +5,7 @@ using std::to_string;
 using std::ofstream;
 using std::fstream;
 using std::ios_base;
+using genetic::City;
 
 namespace traveling_salesman
 {
@@ -68,6 +69,27 @@ namespace traveling_salesman
             g.add_point(Point(x, y));
         }
         return g;
+    }
+
+    vector<City> InputManager::read_cities_in_file(int input_size)
+    {
+        fstream input_file(INPUT_FILE_PATH(to_string(input_size)), ios_base::in);
+        if (input_file.fail())
+            throw runtime_error("File not exist: " + INPUT_FILE_PATH(to_string(input_size)));
+
+        int n;
+        input_file >> n;
+
+        vector<City> cities(n);
+        for (int i = 0; i < n; i++)
+        {
+            City c;
+            input_file >> c.coord.first >> c.coord.second;
+            c.id = i;
+            cities.push_back(c);
+        }
+
+        return cities;
     }
 
 }

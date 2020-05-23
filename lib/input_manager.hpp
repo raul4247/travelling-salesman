@@ -3,6 +3,7 @@
 
 #include "../lib/point.hpp"
 #include "../lib/graph.hpp"
+#include "../lib/travel_route.hpp"
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -21,12 +22,13 @@ namespace traveling_salesman
     class InputManager
     {
         private:
-            static std::vector<Point> gen_points(int);
+            static vector<Point> gen_points(int);
             static void gen_random_input(int);
 
         public:
             static void gen_all_allowed_random_inputs();
             static Graph read_graph_in_file(int);
+            static vector<City> read_cities_in_file(int);
     };
 }
 #endif

@@ -385,7 +385,32 @@ namespace traveling_salesman
 
     void Genetic::run(int input_size)
     {
+        vector<City> cities = InputManager::read_cities_in_file(input_size);
 
+        Timer timer;
+        timer.start();
+        Population cobaia(population_size);
+
+        for(int i = 0; i < population_size; i++){
+            TravelRoute tr(cities);
+            tr.generate_individual();
+            cobaia.save_route(i, tr);
+        }
+
+        cobaia = Genetic::evolve_population(cobaia);
+        // Evolui a cobaia por N geracoes
+        for(int i = 0; i < generations; i++){
+            cobaia = Genetic::evolve_population(cobaia);
+        }
+
+        TravelRoute best = cobaia.get_best_route();
+        TSPResult result(input_size,best.get_distance(), best.get_route(), timer.stop());
+    }
+
+    void Genetic::run_in_range(int begin, int end)
+    {
+        for (int i = begin; i <= end; i++)
+            run(i);
     }
 
 }

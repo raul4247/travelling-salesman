@@ -12,13 +12,15 @@ using std::random_device;
 using std::default_random_engine;
 
 namespace genetic {
-    class City {
+    class City
+    {
         public:
             int id;
             pair<int, int> coord;
     };
 
-    class TravelRoute {
+    class TravelRoute
+    {
         private:
             // Vetor que armanena a rota a ser percorrida
             // Apartir dela indexamos a posicao no cities_dist e cities
@@ -42,6 +44,7 @@ namespace genetic {
             int size();
             void print_order();
             void print_cities();
+            int* get_route();
 
             // static random generator
             static default_random_engine rng;

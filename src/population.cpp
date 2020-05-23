@@ -1,6 +1,6 @@
-#include "../../lib/TSPGenetic/population.hpp"
+#include "../lib/population.hpp"
 
-namespace population {
+namespace genetic {
 
     Population::Population(int capacity){
         this->routes = new vector<TravelRoute>(capacity);
