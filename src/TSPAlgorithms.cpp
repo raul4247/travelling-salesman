@@ -274,6 +274,6 @@ void Dynamic::run(int inputSize){
     cout << inputSize << endl ;
     cost = tsd(mask,pos);
     TSPResult result(inputSize, cost, display_path(0), timer.stop());
-    result.showResult("Dynamic Programming");
+    result.showResult("dynamic_programming");
 
 }

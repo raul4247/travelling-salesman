@@ -52,7 +52,7 @@ Graph InputManager::readGraphInFile(int inputSize)
 {
     fstream inputFile(INPUT_FILE_PATH(to_string(inputSize)), ios_base::in);
     if (inputFile.fail())
-        throw runtime_error("File not exist: " + INPUT_FILE_PATH(to_string(inputSize)));
+        throw runtime_error("File doesn't exist: " + INPUT_FILE_PATH(to_string(inputSize)));
 
     int n;
     inputFile >> n;
