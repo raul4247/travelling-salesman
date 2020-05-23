@@ -1,12 +1,12 @@
-#ifndef GRAPH_H
-#define GRAPH_H
+#ifndef GRAPH2_H
+#define GRAPH2_H
 
 #include <list>
 #include <vector>
 #include <cmath>
 using std::vector;
 
-namespace graph {
+namespace genetic {
     class Graph {
         private:
             vector<vector<double>> *matrix_adj;
@@ -22,4 +22,4 @@ namespace graph {
             void del_conection(int v1, int v2);
     };
 }
-#endif // GRAPH_H
+#endif // GRAPH2_H

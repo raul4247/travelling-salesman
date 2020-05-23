@@ -1,10 +1,10 @@
-#include "../../lib/TSPGenetic/graph.hpp"
+#include "../../lib/graph2.hpp"
 #include <iostream>
 
 using std::cout;
 using std::endl;
 
-namespace graph {
+namespace genetic {
 
     Graph::Graph(int vertices){
         this->vertices = vertices;

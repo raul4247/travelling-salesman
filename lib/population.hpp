@@ -3,10 +3,7 @@
 
 #include "travel_route.hpp"
 
-using travel_route::TravelRoute;
-using travel_route::City;
-
-namespace population {
+namespace genetic {
     class Population {
         private:
             vector<TravelRoute> *routes;

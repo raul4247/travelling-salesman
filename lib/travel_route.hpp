@@ -1,18 +1,17 @@
 #ifndef TRAVEL_ROUTE_H
 #define TRAVEL_ROUTE_H
 
-#include "graph.hpp"
 #include <string>
 #include <random>
 #include <algorithm>
+#include "graph2.hpp"
 
 using std::pair;
 using std::string;
 using std::random_device;
 using std::default_random_engine;
-using graph::Graph;
 
-namespace travel_route {
+namespace genetic {
     class City {
         public:
             int id;

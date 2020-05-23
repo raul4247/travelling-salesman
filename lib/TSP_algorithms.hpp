@@ -8,6 +8,12 @@
 #include "../lib/graph.hpp"
 #include "../lib/TSP_result.hpp"
 #include "../lib/utils.hpp"
+#include "../lib/travel_route.hpp"
+#include "../lib/graph2.hpp"
+#include "../lib/population.hpp"
+
+using genetic::TravelRoute;
+using genetic::Population;
 
 namespace traveling_salesman
 {
@@ -46,6 +52,7 @@ namespace traveling_salesman
             double tsd(int mask, int pos);
             void start();
             int* display_path(int source);
+
         public:
             double min_dist;
             int **path;
@@ -55,6 +62,22 @@ namespace traveling_salesman
             double **dp;
             int pos;
             int visited;
+            void run(int);
+            void run_in_range(int, int);
+    };
+
+    class Genetic
+    {
+        private:
+            static constexpr double mutation_rate = 0.015;
+            static constexpr int tournament_size = 5;
+            // Manter a melhor roda a cada chamada de evolve_population
+            static constexpr bool elitism = true;
+            static Population evolve_population(Population p);
+            static TravelRoute crossover(TravelRoute a, TravelRoute b);
+            static void mutate(TravelRoute &tr);
+            static TravelRoute tournament_selection(Population p);
+        public:
             void run(int);
             void run_in_range(int, int);
     };
