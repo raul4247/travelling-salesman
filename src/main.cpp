@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
         {
             case '1':
                 {
-                    InputManager::gen_all_allowed_randomInputs();
+                    InputManager::gen_all_allowed_random_inputs();
                     break;
                 }
             case '2':

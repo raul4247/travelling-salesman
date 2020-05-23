@@ -1,9 +1,9 @@
-#include "../lib/TSPAlgorithms.hpp"
+#include "../lib/TSP_algorithms.hpp"
 
 using namespace std;
-namespace TravelingSalesman
+namespace traveling_salesman
 {
-    double BruteForce::weigthOfPath(int *path, int size, double **matrix)
+    double BruteForce::weigth_of_path(int *path, int size, double **matrix)
     {
         double weight = 0.0;
 
@@ -18,11 +18,11 @@ namespace TravelingSalesman
     {
         if (i == n)
         {
-            double w = weigthOfPath(arr, n, matrix);
-            if (w <= minDist)
+            double w = weigth_of_path(arr, n, matrix);
+            if (w <= min_dist)
             {
-                minPath = Utils::copyArr(arr, n);
-                minDist = w;
+                min_path = Utils::copy_arr(arr, n);
+                min_dist = w;
             }
             return;
         }
@@ -35,41 +35,41 @@ namespace TravelingSalesman
         }
     }
 
-    void BruteForce::run(int inputSize)
+    void BruteForce::run(int input_size)
     {
-        int *graphPath = new int[inputSize];
-        for (int i = 0; i < inputSize; i++)
-            graphPath[i] = i;
+        int *graph_path = new int[input_size];
+        for (int i = 0; i < input_size; i++)
+            graph_path[i] = i;
 
-        minDist = DBL_MAX;
+        min_dist = DBL_MAX;
 
-        Graph graph = InputManager::readGraphInFile(inputSize);
+        Graph graph = InputManager::read_graph_in_file(input_size);
         Timer timer;
 
         timer.start();
-        permutation(graphPath, 1, inputSize, graph.matrix);
-        TSPResult result(inputSize, minDist, minPath, timer.stop());
+        permutation(graph_path, 1, input_size, graph.matrix);
+        TSPResult result(input_size, min_dist, min_path, timer.stop());
 
-        result.showResult("brute_force");
+        result.show_result("brute_force");
 
-        minDist = DBL_MAX;
-        delete[] graphPath;
+        min_dist = DBL_MAX;
+        delete[] graph_path;
     }
 
-    void BruteForce::runInRange(int begin, int end)
+    void BruteForce::run_in_range(int begin, int end)
     {
         for (int i = begin; i <= end; i++)
             run(i);
     }
 
-    double BranchAndBound::weigthOfPath(int *path, int size, double **matrix)
+    double BranchAndBound::weigth_of_path(int *path, int size, double **matrix)
     {
         double weight = 0.0;
 
         for (int i = 1; i < size; i++)
         {
             weight += matrix[path[i]][path[i - 1]];
-            if (weight > lowerBound && weight > minDist)
+            if (weight > lower_bound && weight > min_dist)
                 return DBL_MAX;
         }
         weight += matrix[path[size - 1]][0];
@@ -81,11 +81,11 @@ namespace TravelingSalesman
     {
         if (i == n)
         {
-            double w = weigthOfPath(arr, n, matrix);
-            if (w <= minDist)
+            double w = weigth_of_path(arr, n, matrix);
+            if (w <= min_dist)
             {
-                minPath = Utils::copyArr(arr, n);
-                minDist = w;
+                min_path = Utils::copy_arr(arr, n);
+                min_dist = w;
             }
             return;
         }
@@ -98,7 +98,7 @@ namespace TravelingSalesman
         }
     }
 
-    double BranchAndBound::calculateLowerBound(double **matrix, int n)
+    double BranchAndBound::calculate_lower_bound(double **matrix, int n)
     {
         double sum = 0.0;
         for (int i = 0; i < n; i++)
@@ -129,30 +129,30 @@ namespace TravelingSalesman
         return sum;
     }
 
-    void BranchAndBound::run(int inputSize)
+    void BranchAndBound::run(int input_size)
     {
-        int *graphPath = new int[inputSize];
-        for (int i = 0; i < inputSize; i++)
-            graphPath[i] = i;
+        int *graph_path = new int[input_size];
+        for (int i = 0; i < input_size; i++)
+            graph_path[i] = i;
 
-        minDist = DBL_MAX;
+        min_dist = DBL_MAX;
 
-        Graph graph = InputManager::readGraphInFile(inputSize);
+        Graph graph = InputManager::read_graph_in_file(input_size);
 
-        lowerBound = calculateLowerBound(graph.matrix, inputSize);
+        lower_bound = calculate_lower_bound(graph.matrix, input_size);
         Timer timer;
 
         timer.start();
-        permutation(graphPath, 1, inputSize, graph.matrix);
-        TSPResult result(inputSize, minDist, minPath, timer.stop());
+        permutation(graph_path, 1, input_size, graph.matrix);
+        TSPResult result(input_size, min_dist, min_path, timer.stop());
 
-        result.showResult("branch_and_bound");
+        result.show_result("branch_and_bound");
 
-        minDist = DBL_MAX;
-        delete[] graphPath;
+        min_dist = DBL_MAX;
+        delete[] graph_path;
     }
 
-    void BranchAndBound::runInRange(int begin, int end)
+    void BranchAndBound::run_in_range(int begin, int end)
     {
         for (int i = begin; i <= end; i++)
             run(i);
