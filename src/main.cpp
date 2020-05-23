@@ -1,16 +1,16 @@
 #include <bits/stdc++.h>
 #include <chrono>
-#include "../lib/Utils.hpp"
-#include "../lib/Graph.hpp"
-#include "../lib/Point.hpp"
-#include "../lib/TSPAlgorithms.hpp"
-#include "../lib/InputManager.hpp"
-#include "../lib/Utils.hpp"
+#include "../lib/utils.hpp"
+#include "../lib/graph.hpp"
+#include "../lib/point.hpp"
+#include "../lib/TSP_algorithms.hpp"
+#include "../lib/input_manager.hpp"
+#include "../lib/utils.hpp"
 
 #define INPUT_FILE_PATH(n) ("../inputs/vertices_" + n + ".in")
 
 using namespace std;
-using namespace TravelingSalesman;
+using namespace traveling_salesman;
 
 int main(int argc, char *argv[])
 {
@@ -29,19 +29,19 @@ int main(int argc, char *argv[])
         {
             case '1':
                 {
-                    InputManager::genAllAllowedRandomInputs();
+                    InputManager::gen_all_allowed_randomInputs();
                     break;
                 }
             case '2':
                 {
                     BruteForce bruteForce;
-                    bruteForce.runInRange(1, 100);
+                    bruteForce.run_in_range(1, 100);
                     break;
                 }
             case '3':
                 {
                     BranchAndBound branchAndBound;
-                    branchAndBound.runInRange(1, 100);
+                    branchAndBound.run_in_range(1, 100);
                     break;
                 }
         }
