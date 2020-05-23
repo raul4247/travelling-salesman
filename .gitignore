@@ -1,3 +1,5 @@
 .vscode
 inputs/*
 build/*
+!inputs/.gitkeep 
+!build/.gitkeep 
