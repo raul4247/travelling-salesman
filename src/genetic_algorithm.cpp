@@ -39,8 +39,8 @@ namespace genetic_algorithm {
         vector<City*> child_cities(a.size(), nullptr);
 
         // Obtem uma posicao inicial e final de uma sub rota de 'a'
-        int start_pos = rand() % a.size();
-        int end_pos = rand() % a.size();
+        int start_pos = rand() % (a.size() - 1) + 1;
+        int end_pos = rand() % (a.size() - 1) + 1;
 
         // Percorre e adiciona a sub rota em child_cities
         for(int i = 0; i < child_cities.size(); i++){
@@ -94,10 +94,10 @@ namespace genetic_algorithm {
     // Realiza a mutacao da rota por meio de swap.
     void GeneticAlgorithm::mutate(TravelRoute &tr){
         // Percorre pelas cidades da rota
-        for(int route_pos1 = 0; route_pos1 < tr.size(); route_pos1++){
+        for(int route_pos1 = 1; route_pos1 < tr.size(); route_pos1++){
             // Aplica a taxa de mutação
             if(((double) rand() / RAND_MAX) < mutation_rate){
-                int route_pos2 = rand() % tr.size();
+                int route_pos2 = rand() % (tr.size() - 1) + 1;
                 tr.swap_cities(route_pos1, route_pos2);
             }
         }
