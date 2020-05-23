@@ -6,9 +6,9 @@ namespace genetic_algorithm {
     class GeneticAlgorithm {
         private:
             static constexpr double mutation_rate = 0.015;
-            static const int tournament_size = 5;
+            static constexpr int tournament_size = 5;
             // Manter a melhor roda a cada chamada de evolve_population
-            static const bool elitism = true;
+            static constexpr bool elitism = true;
         public:
             static Population evolve_population(Population p);
             static TravelRoute crossover(TravelRoute a, TravelRoute b);

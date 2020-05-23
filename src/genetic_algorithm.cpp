@@ -4,6 +4,7 @@
 using std::find;
 
 namespace genetic_algorithm {
+
     Population GeneticAlgorithm::evolve_population(Population p){
         Population next_gen(p.size());
         int elitism_offset {};
@@ -35,7 +36,7 @@ namespace genetic_algorithm {
     }
 
     TravelRoute GeneticAlgorithm::crossover(TravelRoute a, TravelRoute b){
-        vector<pair<int,int>*> child_cities(a.size());
+        vector<pair<int,int>*> child_cities(a.size(), nullptr);
 
         // Obtem uma posicao inicial e final de uma sub rota de 'a'
         int start_pos = rand() % a.size();
