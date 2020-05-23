@@ -21,8 +21,9 @@ int main(int argc, char *argv[])
         cout << "Traveling Salesman Solver:\n";
         cout << "1. Gen random inputs [1..100]\n";
         cout << "2. Brute Force through inputs[1..100]\n";
-        cout << "3. Branch and Bound through inputs[1..100]\n\n";
-        cout << "4. Dynamic through inputs[1..100]\n\n";
+        cout << "3. Branch and Bound through inputs[1..100]\n";
+        cout << "4. Dynamic through inputs[1..100]\n";
+        cout << "5. Genetic through inputs[1..100]\n";
         cout << "0. Exit\n\n";
         cout << "OP: ";
 
@@ -43,6 +44,10 @@ int main(int argc, char *argv[])
             case '4':
                 Dynamic dynamic;
                 dynamic.run_in_range(1,100);
+                break;
+            case '5':
+                Genetic genetic;
+                genetic.run_in_range(1,100);
                 break;
         }
     } while (op != '0');

@@ -17,6 +17,8 @@
 #define MAX_N 100
 #define MAX_XY 1000
 
+using genetic::City;
+
 namespace traveling_salesman
 {
     class InputManager

@@ -1,5 +1,5 @@
-#include "../../lib/graph2.hpp"
 #include <iostream>
+#include "../lib/graph2.hpp"
 
 using std::cout;
 using std::endl;
