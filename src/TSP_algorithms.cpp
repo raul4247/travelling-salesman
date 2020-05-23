@@ -404,7 +404,7 @@ namespace traveling_salesman
         }
 
         TravelRoute best = cobaia.get_best_route();
-        TSPResult result(input_size,best.get_distance(), best.get_route(), timer.stop());
+        TSPResult result(input_size, best.get_distance(), best.get_route(), timer.stop());
         result.show_result("genetic");
     }
 
