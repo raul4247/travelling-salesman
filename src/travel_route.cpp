@@ -8,8 +8,7 @@ using std::shuffle;
 using std::iter_swap;
 
 namespace travel_route {
-    std::random_device rd {};
-    default_random_engine TravelRoute::rng {rd()};
+    default_random_engine TravelRoute::rng {std::random_device{}()};
 
     TravelRoute::TravelRoute(vector<City> cities){
         this->route = new vector<int>(cities.size());
@@ -61,7 +60,7 @@ namespace travel_route {
 
     void TravelRoute::generate_individual(){
         if(this->route != nullptr){
-            shuffle(this->route->begin() += 1, this->route->end(), this->rng);
+            shuffle(this->route->begin() + 1, this->route->end(), this->rng);
             this->distance = 0.0;
             this->fitness = 0.0;
         }

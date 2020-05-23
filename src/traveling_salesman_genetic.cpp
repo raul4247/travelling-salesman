@@ -19,28 +19,29 @@ int main(){
         city.id = id++;
     }
 
-    Population cobaia(50);
+    for(int i = 0; i < 10; i++){
+        Population cobaia(50);
 
-    for(int i = 0; i < 50; i++){
-        TravelRoute tr(cities);
-        tr.generate_individual();
-        cobaia.save_route(i, tr);
-    }
+        for(int i = 0; i < 50; i++){
+            TravelRoute tr(cities);
+            tr.generate_individual();
+            cobaia.save_route(i, tr);
+        }
 
-    TravelRoute best = cobaia.get_best_route();
+        TravelRoute best = cobaia.get_best_route();
 
-    cout << "distancia inicial: " << best.get_distance() << endl;
+        cout << "distancia inicial: " << best.get_distance() << endl;
 
-    cobaia = GeneticAlgorithm::evolve_population(cobaia);
-    // Evolui a cobaia por 100 geracoes
-    for(int i = 0; i < 1000; i++){
         cobaia = GeneticAlgorithm::evolve_population(cobaia);
-    }
+        // Evolui a cobaia por 1000 geracoes
+        for(int i = 0; i < 1000; i++){
+            cobaia = GeneticAlgorithm::evolve_population(cobaia);
+        }
 
-    best = cobaia.get_best_route();
-    cout << "resultado: " << best.get_distance() << endl;
-    best.print_order();
-    best.print_cities();
+        best = cobaia.get_best_route();
+        cout << "resultado: " << best.get_distance() << endl;
+        best.print_order();
+    }
 
     return 0;
 }

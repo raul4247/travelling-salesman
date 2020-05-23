@@ -40,7 +40,8 @@ namespace travel_route {
             int size();
             void print_order();
             void print_cities();
-            // static random generator, must be inicialized outside
+
+            // static random generator
             static default_random_engine rng;
     };
 }
