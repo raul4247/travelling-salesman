@@ -12,6 +12,7 @@
 #include <time.h>
 
 #define INPUT_FILE_PATH(n) ("../inputs/vertices_" + n + ".in")
+#define OUTPUT_FILE_PATH(algorithm) ("../outputs/" + algorithm + ".csv")
 #define MAX_N 100
 #define MAX_XY 1000
 

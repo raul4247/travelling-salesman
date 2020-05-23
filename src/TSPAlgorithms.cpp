@@ -57,7 +57,7 @@ void BruteForce::run(int inputSize)
     permutation(graphPath, 1, inputSize, graph.matrix);
     TSPResult result(inputSize, minDist, minPath, timer.stop());
 
-    result.showResult("Brute Force");
+    result.showResult("brute_force");
 
     minDist = DBL_MAX;
     delete[] graphPath;
@@ -153,7 +153,7 @@ void BranchAndBound::run(int inputSize)
     permutation(graphPath, 1, inputSize, graph.matrix);
     TSPResult result(inputSize, minDist, minPath, timer.stop());
 
-    result.showResult("Branch and Bound");
+    result.showResult("branch_and_bound");
 
     minDist = DBL_MAX;
     delete[] graphPath;
