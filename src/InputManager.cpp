@@ -26,17 +26,10 @@ vector<Point> InputManager::genPoints(int n)
 void InputManager::genRandomInput(int vertexCount)
 {
     if (vertexCount <= 0 || vertexCount > MAX_N)
-    {
-        cout << "Exception: vertexCount invalid in generateRandomInput"
-            << "\n";
-        return;
-    }
+        throw runtime_error("vertexCount invalid in generateRandomInput: " + to_string(vertexCount));
 
     if (vertexCount > ((MAX_XY + 1) * (MAX_XY + 1)))
-    {
-        cout << "Exception: Impossible to generate " << vertexCount << " vertices with only " << (MAX_XY + 1) * (MAX_XY + 1) << " combinations of XY\n";
-        return;
-    }
+        throw runtime_error("Exception: Impossible to generate " + to_string(vertexCount) + " vertices with only " + to_string((MAX_XY + 1) * (MAX_XY + 1)) + " combinations of XY");
 
     vector<Point> points = genPoints(vertexCount);
 
@@ -58,6 +51,8 @@ void InputManager::genAllAllowedRandomInputs()
 Graph InputManager::readGraphInFile(int inputSize)
 {
     fstream inputFile(INPUT_FILE_PATH(to_string(inputSize)), ios_base::in);
+    if (inputFile.fail())
+        throw runtime_error("File not exist: " + INPUT_FILE_PATH(to_string(inputSize)));
 
     int n;
     inputFile >> n;
