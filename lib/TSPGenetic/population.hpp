@@ -1,7 +1,7 @@
 #ifndef POPULATION_H
 #define POPULATION_H
 
-#include "../lib/travel_route.hpp"
+#include "travel_route.hpp"
 
 using travel_route::TravelRoute;
 using travel_route::City;

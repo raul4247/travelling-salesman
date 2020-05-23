@@ -1,4 +1,4 @@
-#include "../lib/genetic_algorithm.hpp"
+#include "../../lib/TSPGenetic/genetic_algorithm.hpp"
 #include <algorithm>
 
 using std::find;

@@ -1,4 +1,4 @@
-#include "../lib/population.hpp"
+#include "../../lib/TSPGenetic/population.hpp"
 
 namespace population {
 

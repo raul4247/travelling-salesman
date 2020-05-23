@@ -1,7 +1,7 @@
 #ifndef TRAVEL_ROUTE_H
 #define TRAVEL_ROUTE_H
 
-#include "../lib/graph.hpp"
+#include "graph.hpp"
 #include <string>
 #include <random>
 #include <algorithm>

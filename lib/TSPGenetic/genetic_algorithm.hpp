@@ -1,6 +1,6 @@
 #ifndef GENETIC_ALGORITHM_H
 #define GENETIC_ALGORITHM_H
-#include "../lib/population.hpp"
+#include "population.hpp"
 
 using population::Population;
 

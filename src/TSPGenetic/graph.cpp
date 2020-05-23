@@ -1,4 +1,4 @@
-#include "../lib/graph.hpp"
+#include "../../lib/TSPGenetic/graph.hpp"
 #include <iostream>
 
 using std::cout;

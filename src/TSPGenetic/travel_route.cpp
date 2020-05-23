@@ -1,4 +1,4 @@
-#include "../lib/travel_route.hpp"
+#include "../../lib/TSPGenetic/travel_route.hpp"
 #include <algorithm>
 #include <random>
 #include <iostream>
