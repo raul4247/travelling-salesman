@@ -350,7 +350,7 @@ namespace traveling_salesman
         Population next_gen(p.size());
         int elitism_offset{};
 
-        // Manter a melhor roda, se elitism estiver habilitado
+        // Manter a melhor rota, se elitism estiver habilitado
         if (elitism)
         {
             next_gen.save_route(0, p.get_best_route());
@@ -468,7 +468,7 @@ namespace traveling_salesman
         for (int i = 0; i < tournament_size; i++)
         {
             int random_idx = rand() % p.size();
-            tournament.save_route(0, p.get_route(random_idx));
+            tournament.save_route(i, p.get_route(random_idx));
         }
         return tournament.get_best_route();
     }
