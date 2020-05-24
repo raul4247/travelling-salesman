@@ -20,4 +20,4 @@ $(BUILD_PATH)%.o: $(SOURCE_PATH)%.cpp
 
 clean:
 	@echo "Cleaning up..."
-	rm build/*.o inputs/*.in outputs/*.csv
+	rm build/*.o inputs/*.in outputs/*.csv outputs/*.out

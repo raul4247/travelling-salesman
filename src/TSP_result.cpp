@@ -18,31 +18,51 @@ namespace traveling_salesman
 
     void TSPResult::show_result(string algorithm_name)
     {
+        ofstream outputFile;
+        outputFile.open(OUTPUT_FILE_PATH(algorithm_name), ios::out | ios::app);
+
+        outputFile << algorithm_name << "\n";
+        outputFile << "Input size: " << input_size << "\n";
+        outputFile << "Min dist: " << min_dist << "\n";
+        outputFile << "Min path: ";
+
         cout << algorithm_name << "\n";
         cout << "Input size: " << input_size << "\n";
         cout << "Min dist: " << min_dist << "\n";
         cout << "Min path: ";
+        
         for (int i = 0; i < input_size; i++)
+        {
             cout << min_path[i] << " ";
+            outputFile << min_path[i] << " ";
+        }
 
         if (time_taken_in_microseconds < 1000)
+        {
             cout << "\nTime taken: " << time_taken_in_microseconds << " microseconds\n\n";
+            outputFile << "\nTime taken: " << time_taken_in_microseconds << " microseconds\n\n";
+        }
         else
         {
             if (time_taken_in_microseconds > 1000000)
             {
                 if (time_taken_in_microseconds > 60000000)
+                {
                     cout << "\nTime taken: " << fixed << setprecision(4) << (time_taken_in_microseconds / 60000000.0) << " minutes\n\n";
+                    outputFile << "\nTime taken: " << fixed << setprecision(4) << (time_taken_in_microseconds / 60000000.0) << " minutes\n\n";
+                }
                 else
+                {
                     cout << "\nTime taken: " << fixed << setprecision(4) << (time_taken_in_microseconds / 1000000.0) << " seconds\n\n";
+                    outputFile << "\nTime taken: " << fixed << setprecision(4) << (time_taken_in_microseconds / 1000000.0) << " seconds\n\n";
+                }
             }
             else
+            {
                 cout << "\nTime taken: " << fixed << setprecision(4) << (time_taken_in_microseconds / 1000.0) << " miliseconds\n\n";
+                outputFile << "\nTime taken: " << fixed << setprecision(4) << (time_taken_in_microseconds / 1000.0) << " miliseconds\n\n";
+            }
         }
-
-        ofstream outputFile;
-        outputFile.open(OUTPUT_FILE_PATH(algorithm_name), ios::out | ios::app);
-        outputFile << input_size << ", " << std::fixed << std::setprecision(7) << (time_taken_in_microseconds / 1000000.0) << '\n';
         outputFile.close();
     }
 

@@ -36,7 +36,7 @@ namespace traveling_salesman
         }
     }
 
-    void BruteForce::run(int input_size)
+    long long BruteForce::run(int input_size)
     {
         int *graph_path = new int[input_size];
         for (int i = 0; i < input_size; i++)
@@ -49,18 +49,41 @@ namespace traveling_salesman
 
         timer.start();
         permutation(graph_path, 1, input_size);
-        TSPResult result(input_size, min_dist, min_path, timer.stop());
+        long long stop_time = timer.stop();
+        TSPResult result(input_size, min_dist, min_path, stop_time);
 
         result.show_result("brute_force");
 
         min_dist = DBL_MAX;
         delete[] graph_path;
+        return stop_time;
     }
 
     void BruteForce::run_in_range(int begin, int end)
     {
         for (int i = begin; i <= end; i++)
             run(i);
+    }
+
+    void BruteForce::run_in_range_statistic(int begin, int end)
+    {
+        for (int i = begin; i <= end; i++)
+        {
+            cout << "N: " << i << "\n";
+            long long sum = 0;
+            for (int j = 0; j < SAMPLES; j++)
+                sum += run(i);
+
+            ofstream outputCSV;
+            string algorithm_name = "brute_force";
+            outputCSV.open(OUTPUT_CSV_PATH(algorithm_name), ios::out | ios::app);
+            stringstream stream;
+            stream << std::fixed << std::setprecision(7) << ((sum / SAMPLES) / 1000000.0);
+            string time = stream.str();
+            replace(time.begin(), time.end(), '.', ',');
+            outputCSV << time << '\n';
+            outputCSV.close();
+        }
     }
 
     double BranchAndBound::weigth_of_path(int *path, int size)
@@ -132,7 +155,7 @@ namespace traveling_salesman
         return sum;
     }
 
-    void BranchAndBound::run(int input_size)
+    long long BranchAndBound::run(int input_size)
     {
         int *graph_path = new int[input_size];
         for (int i = 0; i < input_size; i++)
@@ -149,18 +172,40 @@ namespace traveling_salesman
 
         timer.start();
         permutation(graph_path, 1, input_size);
-        TSPResult result(input_size, min_dist, min_path, timer.stop());
+        long long stop_time = timer.stop();
+        TSPResult result(input_size, min_dist, min_path, stop_time);
 
         result.show_result("branch_and_bound");
 
         min_dist = DBL_MAX;
         delete[] graph_path;
+        return stop_time;
     }
 
     void BranchAndBound::run_in_range(int begin, int end)
     {
         for (int i = begin; i <= end; i++)
             run(i);
+    }
+
+    void BranchAndBound::run_in_range_statistic(int begin, int end)
+    {
+        for (int i = begin; i <= end; i++)
+        {
+            long long sum = 0;
+            for (int j = 0; j < SAMPLES; j++)
+                sum += run(i);
+
+            ofstream outputCSV;
+            string algorithm_name = "branch_and_bound";
+            outputCSV.open(OUTPUT_CSV_PATH(algorithm_name), ios::out | ios::app);
+            stringstream stream;
+            stream << std::fixed << std::setprecision(7) << ((sum / SAMPLES) / 1000000.0);
+            string time = stream.str();
+            replace(time.begin(), time.end(), '.', ',');
+            outputCSV << time << '\n';
+            outputCSV.close();
+        }
     }
 
     double Dynamic::weigth_of_path(int *path, int size)
@@ -183,9 +228,9 @@ namespace traveling_salesman
             path[i] = new int[size];
             dp[i] = new double[size];
         }
-        for(int i = 0; i < (1 << size); i++ )
+        for (int i = 0; i < (1 << size); i++)
         {
-            for(int j = 0; j < size; j++)
+            for (int j = 0; j < size; j++)
             {
                 dp[i][j] = -1;
                 path[i][j] = -1;
@@ -193,24 +238,24 @@ namespace traveling_salesman
         }
     }
 
-    int* Dynamic::display_path(int source)
+    int *Dynamic::display_path(int source)
     {
-        int count=1,i=0;
+        int count = 1, i = 0;
         int brr[size];
-        for(i = 0; i < size; i++)
+        for (i = 0; i < size; i++)
         {
-            brr[i]=-1;
+            brr[i] = -1;
         }
         int *arrya = new int[size];
         arrya[0] = 0;
-        while(count < size)
+        while (count < size)
         {
-            for(i = 0; i < (1 << size); i++)
+            for (i = 0; i < (1 << size); i++)
             {
-                if(path[i][source] != -1 && brr[path[i][source]] == -1)
+                if (path[i][source] != -1 && brr[path[i][source]] == -1)
                 {
                     brr[path[i][source]]++;
-                    source=path[i][source];
+                    source = path[i][source];
                     arrya[count] = source;
                     count++;
 
@@ -223,14 +268,13 @@ namespace traveling_salesman
 
     double Dynamic::tsd(int mask, int source)
     {
-        if(mask == visited)
+        if (mask == visited)
         {
             return graph->get_conection(source, pos);
         }
-        else if (dp[mask][source]!=-1)
+        else if (dp[mask][source] != -1)
         {
             return dp[mask][source];
-
         }
         double ans = DBL_MAX, minAns = 0, k;
         int i;
@@ -239,15 +283,15 @@ namespace traveling_salesman
             if((mask&(1 << i)) == 0)
             {
                 minAns = graph->get_conection(source, i) + tsd(mask|(1<<i),i);
-                if(ans>minAns)
+                if(ans > minAns)
                 {
-                    ans=minAns;
-                    k=i;
+                    ans = minAns;
+                    k = i;
                 }
             }
         }
-        path[mask][source]=k;
-        dp[mask][source]=ans;
+        path[mask][source] = k;
+        dp[mask][source] = ans;
         return dp[mask][source];
     }
 
@@ -257,7 +301,7 @@ namespace traveling_salesman
             run(i);
     }
 
-    void Dynamic::run(int input_size)
+    long long Dynamic::run(int input_size)
     {
         size = input_size;
 
@@ -274,25 +318,48 @@ namespace traveling_salesman
         Timer timer;
 
         timer.start();
-        cost = tsd(mask,pos);
-
-        TSPResult result(input_size, cost, display_path(0), timer.stop());
+        cost = tsd(mask, pos);
+        long long stop_time = timer.stop();
+        TSPResult result(input_size, cost, display_path(0), stop_time);
         result.show_result("dynamic_programming");
-
+        return stop_time;
     }
 
-    Population Genetic::evolve_population(Population p){
+    void Dynamic::run_in_range_statistic(int begin, int end)
+    {
+        for (int i = begin; i <= end; i++)
+        {
+            long long sum = 0;
+            for (int j = 0; j < SAMPLES; j++)
+                sum += run(i);
+
+            ofstream outputCSV;
+            string algorithm_name = "dynamic_programming";
+            outputCSV.open(OUTPUT_CSV_PATH(algorithm_name), ios::out | ios::app);
+            stringstream stream;
+            stream << std::fixed << std::setprecision(7) << ((sum / SAMPLES) / 1000000.0);
+            string time = stream.str();
+            replace(time.begin(), time.end(), '.', ',');
+            outputCSV << time << '\n';
+            outputCSV.close();
+        }
+    }
+
+    Population Genetic::evolve_population(Population p)
+    {
         Population next_gen(p.size());
-        int elitism_offset {};
+        int elitism_offset{};
 
         // Manter a melhor roda, se elitism estiver habilitado
-        if(elitism){
+        if (elitism)
+        {
             next_gen.save_route(0, p.get_best_route());
             elitism_offset = 1;
         }
 
         // Fazer o crossover da população
-        for(int i = elitism_offset; i < p.size(); i++){
+        for (int i = elitism_offset; i < p.size(); i++)
+        {
             // Seleciona os "pais"
             TravelRoute p1 = tournament_selection(p);
             TravelRoute p2 = tournament_selection(p);
@@ -304,47 +371,58 @@ namespace traveling_salesman
 
         // Mudando um pouco a população, para adicionar
         // algum novo "material genetico"
-        for(int i = elitism_offset; i < next_gen.size(); i++){
+        for (int i = elitism_offset; i < next_gen.size(); i++)
+        {
             mutate(next_gen.get_route(i));
         }
 
         return next_gen;
     }
 
-    TravelRoute Genetic::crossover(TravelRoute a, TravelRoute b){
-        vector<City*> child_cities(a.size(), nullptr);
+    TravelRoute Genetic::crossover(TravelRoute a, TravelRoute b)
+    {
+        vector<City *> child_cities(a.size(), nullptr);
 
         // Obtem uma posicao inicial e final de uma sub rota de 'a'
         int start_pos = rand() % (a.size() - 1) + 1;
         int end_pos = rand() % (a.size() - 1) + 1;
 
         // Percorre e adiciona a sub rota em child_cities
-        for(int i = 0; i < child_cities.size(); i++){
-            if(start_pos < end_pos && i > start_pos && i < end_pos){
+        for (int i = 0; i < child_cities.size(); i++)
+        {
+            if (start_pos < end_pos && i > start_pos && i < end_pos)
+            {
                 child_cities.at(i) = new City(a.get_city(i));
             }
-            else if(start_pos > end_pos){
-                if(!(i < start_pos && i > end_pos)){
+            else if (start_pos > end_pos)
+            {
+                if (!(i < start_pos && i > end_pos))
+                {
                     child_cities.at(i) = new City(a.get_city(i));
                 }
             }
         }
 
         // Percorre a rota b
-        for(int i = 0; i < b.size(); i++){
+        for (int i = 0; i < b.size(); i++)
+        {
             // Se child_cities não tiver a cidade da rota b, adiciona
             bool found = false;
             City bcity = b.get_city(i);
-            for(auto city : child_cities){
+            for(auto city : child_cities)
+            {
                 if(city != nullptr && *city == bcity){
                     found = true;
                     break;
                 }
             }
-            if(!found){
+            if (!found)
+            {
                 // Percorre para encontrar uma posicao vazia em child_cities
-                for(int j = 0; j < child_cities.size(); j++){
-                    if(child_cities.at(j) == nullptr) {
+                for (int j = 0; j < child_cities.size(); j++)
+                {
+                    if (child_cities.at(j) == nullptr)
+                    {
                         child_cities.at(j) = new City(b.get_city(i));
                         break;
                     }
@@ -354,9 +432,11 @@ namespace traveling_salesman
 
         // Cria novo vector, dessa vez sem pointer.
         vector<City> final;
-        for(int i = 0; i < child_cities.size(); i++){
+        for (int i = 0; i < child_cities.size(); i++)
+        {
             auto aux = child_cities.at(i);
-            if(aux != nullptr){
+            if (aux != nullptr)
+            {
                 final.push_back(*aux);
                 delete aux;
                 aux = nullptr;
@@ -368,27 +448,32 @@ namespace traveling_salesman
     }
 
     // Realiza a mutacao da rota por meio de swap.
-    void Genetic::mutate(TravelRoute &tr){
+    void Genetic::mutate(TravelRoute &tr)
+    {
         // Percorre pelas cidades da rota
-        for(int route_pos1 = 1; route_pos1 < tr.size(); route_pos1++){
+        for (int route_pos1 = 1; route_pos1 < tr.size(); route_pos1++)
+        {
             // Aplica a taxa de mutação
-            if(((double) rand() / RAND_MAX) < mutation_rate){
+            if (((double)rand() / RAND_MAX) < mutation_rate)
+            {
                 int route_pos2 = rand() % (tr.size() - 1) + 1;
                 tr.swap_cities(route_pos1, route_pos2);
             }
         }
     }
 
-    TravelRoute Genetic::tournament_selection(Population p){
+    TravelRoute Genetic::tournament_selection(Population p)
+    {
         Population tournament(tournament_size);
-        for(int i = 0; i < tournament_size; i++){
+        for (int i = 0; i < tournament_size; i++)
+        {
             int random_idx = rand() % p.size();
             tournament.save_route(0, p.get_route(random_idx));
         }
         return tournament.get_best_route();
     }
 
-    void Genetic::run(int input_size)
+    long long Genetic::run(int input_size)
     {
         vector<City> cities = InputManager::read_cities_in_file(input_size);
 
@@ -396,7 +481,8 @@ namespace traveling_salesman
         timer.start();
         Population cobaia(population_size);
 
-        for(int i = 0; i < population_size; i++){
+        for (int i = 0; i < population_size; i++)
+        {
             TravelRoute tr(cities);
             tr.generate_individual();
             cobaia.save_route(i, tr);
@@ -404,13 +490,15 @@ namespace traveling_salesman
 
         cobaia = Genetic::evolve_population(cobaia);
         // Evolui a cobaia por N geracoes
-        for(int i = 0; i < generations; i++){
+        for (int i = 0; i < generations; i++)
             cobaia = Genetic::evolve_population(cobaia);
-        }
 
         TravelRoute best = cobaia.get_best_route();
-        TSPResult result(input_size, best.get_distance(), best.get_route(), timer.stop());
+        long long stop_time = timer.stop();
+
+        TSPResult result(input_size, best.get_distance(), best.get_route(), stop_time);
         result.show_result("genetic");
+        return stop_time;
     }
 
     void Genetic::run_in_range(int begin, int end)
@@ -419,4 +507,24 @@ namespace traveling_salesman
             run(i);
     }
 
-}
+    void Genetic::run_in_range_statistic(int begin, int end)
+    {
+        for (int i = begin; i <= end; i++)
+        {
+            long long sum = 0;
+            for (int j = 0; j < SAMPLES; j++)
+                sum += run(i);
+
+            ofstream outputCSV;
+            string algorithm_name = "genetic";
+
+            outputCSV.open(OUTPUT_CSV_PATH(algorithm_name), ios::out | ios::app);
+            stringstream stream;
+            stream << std::fixed << std::setprecision(7) << ((sum / SAMPLES) / 1000000.0);
+            string time = stream.str();
+            replace(time.begin(), time.end(), '.', ',');
+            outputCSV << time << '\n';
+            outputCSV.close();
+        }
+    }
+} // namespace traveling_salesman

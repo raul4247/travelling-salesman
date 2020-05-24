@@ -11,6 +11,8 @@
 #include "../lib/travel_route.hpp"
 #include "../lib/population.hpp"
 
+#define SAMPLES 10
+
 using genetic::TravelRoute;
 using genetic::Population;
 
@@ -26,8 +28,9 @@ namespace traveling_salesman
         public:
             double min_dist;
             int *min_path;
-            void run(int);
+            long long run(int);
             void run_in_range(int, int);
+            void run_in_range_statistic(int, int);
     };
 
     class BranchAndBound
@@ -41,8 +44,9 @@ namespace traveling_salesman
             double lower_bound;
             double min_dist;
             int *min_path;
-            void run(int);
+            long long run(int);
             void run_in_range(int, int);
+            void run_in_range_statistic(int, int);
     };
 
     class Dynamic
@@ -62,8 +66,9 @@ namespace traveling_salesman
             double **dp;
             int pos;
             int visited;
-            void run(int);
+            long long run(int);
             void run_in_range(int, int);
+            void run_in_range_statistic(int, int);
     };
 
     class Genetic
@@ -80,8 +85,9 @@ namespace traveling_salesman
             static void mutate(TravelRoute &tr);
             static TravelRoute tournament_selection(Population p);
         public:
-            void run(int);
+            long long run(int);
             void run_in_range(int, int);
+            void run_in_range_statistic(int, int);
     };
 }
 #endif // TSP_ALGORITHMS_H

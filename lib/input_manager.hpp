@@ -14,7 +14,8 @@
 #include "../lib/travel_route.hpp"
 
 #define INPUT_FILE_PATH(n) ("../inputs/vertices_" + n + ".in")
-#define OUTPUT_FILE_PATH(algorithm) ("../outputs/" + algorithm + ".csv")
+#define OUTPUT_CSV_PATH(algorithm) ("../outputs/" + algorithm + ".csv")
+#define OUTPUT_FILE_PATH(algorithm) ("../outputs/" + algorithm + ".out")
 #define MAX_N 100
 #define MAX_XY 1000
 
