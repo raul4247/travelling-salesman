@@ -3,29 +3,34 @@
 using std::make_pair;
 namespace traveling_salesman
 {
-    Point::Point(int x, int y)
+    Point::Point(int id, int x, int y){
+        this->id = id;
+        this->coordinates.first = x;
+        this->coordinates.second = y;
+    }
+
+    int Point::get_id()
     {
-        this->x = x;
-        this->y = y;
+        return this->id;
     }
 
     int Point::get_x()
     {
-        return this->x;
+        return this->coordinates.first;
     }
 
     int Point::get_y()
     {
-        return this->y;
+        return this->coordinates.second;
     }
 
     pair<int, int> Point::get_pair()
     {
-        return make_pair(x, y);
+        return this->coordinates;
     }
 
     double Point::dist_to(Point p)
     {
-        return sqrt(pow(x - p.get_x(), 2) + pow(y - p.get_y(), 2));
+        return sqrt(pow(p.get_x() - this->get_x(), 2) + pow(p.get_y() - this->get_y(), 2));
     }
 }

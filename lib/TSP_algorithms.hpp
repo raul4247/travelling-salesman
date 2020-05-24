@@ -9,7 +9,6 @@
 #include "../lib/TSP_result.hpp"
 #include "../lib/utils.hpp"
 #include "../lib/travel_route.hpp"
-#include "../lib/graph2.hpp"
 #include "../lib/population.hpp"
 
 using genetic::TravelRoute;
@@ -20,8 +19,9 @@ namespace traveling_salesman
     class BruteForce
     {
         private:
-            double weigth_of_path(int *path, int size, double **matrix);
-            void permutation(int *arr, int i, int n, double **matrix);
+            double weigth_of_path(int *path, int size);
+            void permutation(int *arr, int i, int n);
+            Graph* graph;
 
         public:
             double min_dist;
@@ -33,10 +33,10 @@ namespace traveling_salesman
     class BranchAndBound
     {
         private:
-            double weigth_of_path(int *path, int size, double **matrix);
-            void permutation(int *arr, int i, int n, double **matrix);
-            double calculate_lower_bound(double **matrix, int n);
-
+            double weigth_of_path(int *path, int size);
+            void permutation(int *arr, int i, int n);
+            double calculate_lower_bound(int n);
+            Graph* graph;
         public:
             double lower_bound;
             double min_dist;
@@ -48,16 +48,16 @@ namespace traveling_salesman
     class Dynamic
     {
         private:
-            double weigth_of_path(int *path, int size, double **matrix);
+            double weigth_of_path(int *path, int size);
             double tsd(int mask, int pos);
             void start();
             int* display_path(int source);
+            Graph* graph;
 
         public:
             double min_dist;
             int **path;
             double min_path;
-            double **matrix;
             int size;
             double **dp;
             int pos;

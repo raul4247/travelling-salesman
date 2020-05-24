@@ -7,6 +7,8 @@ using std::pair;
 using std::shuffle;
 using std::iter_swap;
 
+using City = traveling_salesman::Point;
+
 namespace genetic
 {
     default_random_engine TravelRoute::rng {std::random_device{}()};
@@ -18,14 +20,12 @@ namespace genetic
         this->cities = new vector<City>(cities);
 
         for(int i = 0; i < cities.size(); ++i){
-            this->route->at(i) = cities.at(i).id;
-            auto cityA = cities.at(i).coord;
+            this->route->at(i) = cities.at(i).get_id();
+            auto cityA = cities.at(i);
             for(int j = 0; j < cities.size(); ++j){
                 if(i != j){
-                    auto cityB = cities.at(j).coord;
-                    double xs = pow(cityB.first - cityA.first,2);
-                    double ys = pow(cityB.second - cityA.second,2);
-                    this->cities_dist->add_conection(i, j, sqrt(xs + ys));
+                    auto cityB = cities.at(j);
+                    this->cities_dist->set_conection(i, j, cityA.dist_to(cityB));
                 }
             }
         }
@@ -83,7 +83,8 @@ namespace genetic
         {
             for(auto c : *this->cities)
             {
-                if(c.id == city.id){
+                if(c.get_id() == city.get_id())
+                {
                     contains = true;
                     break;
                 }
@@ -131,7 +132,8 @@ namespace genetic
     {
         if(this->cities != nullptr){
             for(auto &city : *this->cities){
-                std::cout << "(" << city.coord.first << ", " << city.coord.second << ")" << ", ";
+                auto pair = city.get_pair();
+                std::cout << "(" << pair.first << ", " << pair.second << ")" << ", ";
             }
             std::cout << std::endl;
         }

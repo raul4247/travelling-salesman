@@ -5,8 +5,7 @@ using std::to_string;
 using std::ofstream;
 using std::fstream;
 using std::ios_base;
-using genetic::City;
-
+using City = traveling_salesman::Point;
 namespace traveling_salesman
 {
     vector<Point> InputManager::gen_points(int n)
@@ -52,7 +51,7 @@ namespace traveling_salesman
             gen_random_input(i);
     }
 
-    Graph InputManager::read_graph_in_file(int input_size)
+    Graph* InputManager::read_graph_in_file(int input_size)
     {
         fstream input_file(INPUT_FILE_PATH(to_string(input_size)), ios_base::in);
         if (input_file.fail())
@@ -61,12 +60,12 @@ namespace traveling_salesman
         int n;
         input_file >> n;
 
-        Graph g(n);
+        Graph *g = new Graph(n);
         for (int i = 0; i < n; i++)
         {
             int x, y;
             input_file >> x >> y;
-            g.add_point(Point(x, y));
+            g->add_point(Point(x, y));
         }
         return g;
     }
@@ -83,10 +82,9 @@ namespace traveling_salesman
         vector<City> cities;
         for (int i = 0; i < n; i++)
         {
-            City c;
-            input_file >> c.coord.first >> c.coord.second;
-            c.id = i;
-            cities.push_back(c);
+            int x, y;
+            input_file >> x >> y;
+            cities.push_back(City(i, x, y));
         }
 
         return cities;

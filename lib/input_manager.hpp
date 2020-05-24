@@ -1,9 +1,6 @@
 #ifndef INPUT_MANAGER_H
 #define INPUT_MANAGER_H
 
-#include "../lib/point.hpp"
-#include "../lib/graph.hpp"
-#include "../lib/travel_route.hpp"
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -12,12 +9,14 @@
 #include <math.h>
 #include <time.h>
 
+#include "../lib/point.hpp"
+#include "../lib/graph.hpp"
+#include "../lib/travel_route.hpp"
+
 #define INPUT_FILE_PATH(n) ("../inputs/vertices_" + n + ".in")
 #define OUTPUT_FILE_PATH(algorithm) ("../outputs/" + algorithm + ".csv")
 #define MAX_N 100
 #define MAX_XY 1000
-
-using genetic::City;
 
 namespace traveling_salesman
 {
@@ -29,7 +28,7 @@ namespace traveling_salesman
 
         public:
             static void gen_all_allowed_random_inputs();
-            static Graph read_graph_in_file(int);
+            static Graph* read_graph_in_file(int);
             static vector<City> read_cities_in_file(int);
     };
 }

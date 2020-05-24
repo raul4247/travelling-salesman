@@ -4,21 +4,17 @@
 #include <string>
 #include <random>
 #include <algorithm>
-#include "graph2.hpp"
+#include "graph.hpp"
+#include "point.hpp"
 
 using std::pair;
 using std::string;
 using std::random_device;
 using std::default_random_engine;
+using traveling_salesman::Graph;
+using City = traveling_salesman::Point;
 
 namespace genetic {
-    class City
-    {
-        public:
-            int id;
-            pair<int, int> coord;
-    };
-
     class TravelRoute
     {
         private:

@@ -2,26 +2,24 @@
 
 using namespace std;
 
-using genetic::City;
-
 namespace traveling_salesman
 {
-    double BruteForce::weigth_of_path(int *path, int size, double **matrix)
+    double BruteForce::weigth_of_path(int *path, int size)
     {
         double weight = 0.0;
 
         for (int i = 1; i < size; i++)
-            weight += matrix[path[i]][path[i - 1]];
-        weight += matrix[path[size - 1]][0];
+            weight += graph->get_conection(path[i], path[i - 1]);
+        weight += graph->get_conection(path[size - 1], 0);
 
         return weight;
     }
 
-    void BruteForce::permutation(int *arr, int i, int n, double **matrix)
+    void BruteForce::permutation(int *arr, int i, int n)
     {
         if (i == n)
         {
-            double w = weigth_of_path(arr, n, matrix);
+            double w = weigth_of_path(arr, n);
             if (w <= min_dist)
             {
                 min_path = Utils::copy_arr(arr, n);
@@ -33,7 +31,7 @@ namespace traveling_salesman
         for (int j = i; j < n; j++)
         {
             swap(arr[i], arr[j]);
-            permutation(arr, i + 1, n, matrix);
+            permutation(arr, i + 1, n);
             swap(arr[i], arr[j]);
         }
     }
@@ -46,11 +44,11 @@ namespace traveling_salesman
 
         min_dist = DBL_MAX;
 
-        Graph graph = InputManager::read_graph_in_file(input_size);
+        graph = InputManager::read_graph_in_file(input_size);
         Timer timer;
 
         timer.start();
-        permutation(graph_path, 1, input_size, graph.matrix);
+        permutation(graph_path, 1, input_size);
         TSPResult result(input_size, min_dist, min_path, timer.stop());
 
         result.show_result("brute_force");
@@ -65,26 +63,26 @@ namespace traveling_salesman
             run(i);
     }
 
-    double BranchAndBound::weigth_of_path(int *path, int size, double **matrix)
+    double BranchAndBound::weigth_of_path(int *path, int size)
     {
         double weight = 0.0;
 
         for (int i = 1; i < size; i++)
         {
-            weight += matrix[path[i]][path[i - 1]];
+            weight += graph->get_conection(path[i], path[i - 1]);
             if (weight > lower_bound && weight > min_dist)
                 return DBL_MAX;
         }
-        weight += matrix[path[size - 1]][0];
+        weight += graph->get_conection(path[size - 1], 0);
 
         return weight;
     }
 
-    void BranchAndBound::permutation(int *arr, int i, int n, double **matrix)
+    void BranchAndBound::permutation(int *arr, int i, int n)
     {
         if (i == n)
         {
-            double w = weigth_of_path(arr, n, matrix);
+            double w = weigth_of_path(arr, n);
             if (w <= min_dist)
             {
                 min_path = Utils::copy_arr(arr, n);
@@ -96,37 +94,39 @@ namespace traveling_salesman
         for (int j = i; j < n; j++)
         {
             swap(arr[i], arr[j]);
-            permutation(arr, i + 1, n, matrix);
+            permutation(arr, i + 1, n);
             swap(arr[i], arr[j]);
         }
     }
 
-    double BranchAndBound::calculate_lower_bound(double **matrix, int n)
+    double BranchAndBound::calculate_lower_bound(int n)
     {
         double sum = 0.0;
         for (int i = 0; i < n; i++)
         {
-            double tmp = matrix[i][i];
-            matrix[i][i] = DBL_MAX;
+            double tmp = graph->get_conection(i, i);
+            graph->set_conection(i, i, DBL_MAX);
 
-            int min1 = matrix[i][0], min2 = matrix[i][1];
+            int min1 = graph->get_conection(i, 0);
+            int min2 = graph->get_conection(i, 1);
             if (min2 < min1)
             {
-                min1 = matrix[i][1];
-                min2 = matrix[i][0];
+                min1 = graph->get_conection(i, 1);
+                min2 = graph->get_conection(i, 0);
             }
 
-            for (int i = 2; i < n; i++)
+            for (int j = 2; j < n; j++)
             {
-                if (matrix[i][i] < min1)
+                auto tmp = graph->get_conection(j, j);
+                if (tmp < min1)
                 {
                     min2 = min1;
-                    min1 = matrix[i][i];
+                    min1 = tmp;
                 }
-                else if (matrix[i][i] < min2)
-                    min2 = matrix[i][i];
+                else if (tmp < min2)
+                    min2 = tmp;
             }
-            matrix[i][i] = tmp;
+            graph->set_conection(i, i, tmp);
             sum += min1 + min2;
         }
         return sum;
@@ -140,13 +140,15 @@ namespace traveling_salesman
 
         min_dist = DBL_MAX;
 
-        Graph graph = InputManager::read_graph_in_file(input_size);
+        graph = InputManager::read_graph_in_file(input_size);
 
-        lower_bound = calculate_lower_bound(graph.matrix, input_size);
+        if(input_size > 1)
+            lower_bound = calculate_lower_bound(input_size);
+        else lower_bound = 0;
         Timer timer;
 
         timer.start();
-        permutation(graph_path, 1, input_size, graph.matrix);
+        permutation(graph_path, 1, input_size);
         TSPResult result(input_size, min_dist, min_path, timer.stop());
 
         result.show_result("branch_and_bound");
@@ -161,13 +163,13 @@ namespace traveling_salesman
             run(i);
     }
 
-    double Dynamic::weigth_of_path(int *path, int size, double **matrix)
+    double Dynamic::weigth_of_path(int *path, int size)
     {
         double weight = 0.0;
 
         for (int i = 1; i < size; i++)
-            weight += matrix[path[i]][path[i - 1]];
-        weight += matrix[path[size - 1]][0];
+            weight += graph->get_conection(path[i], path[i - 1]);
+        weight += graph->get_conection(path[size - 1], 0);
 
         return weight;
     }
@@ -176,17 +178,17 @@ namespace traveling_salesman
     {
         path = new int *[1 << size];
         dp = new double *[1 << size];
-        for (int i = 0; i < (1<<size); i++)
+        for (int i = 0; i < (1 << size); i++)
         {
             path[i] = new int[size];
             dp[i] = new double[size];
         }
-        for(int i=0;i< (1 << size);i++ )
+        for(int i = 0; i < (1 << size); i++ )
         {
-            for(int j=0;j<size;j++)
+            for(int j = 0; j < size; j++)
             {
-                dp[i][j]=-1;
-                path[i][j]=-1;
+                dp[i][j] = -1;
+                path[i][j] = -1;
             }
         }
     }
@@ -195,17 +197,17 @@ namespace traveling_salesman
     {
         int count=1,i=0;
         int brr[size];
-        for(i=0;i<size;i++)
+        for(i = 0; i < size; i++)
         {
             brr[i]=-1;
         }
         int *arrya = new int[size];
         arrya[0] = 0;
-        while(count<size)
+        while(count < size)
         {
-            for(i=0;i<(1 << size);i++)
+            for(i = 0; i < (1 << size); i++)
             {
-                if(path[i][source]!=-1 && brr[path[i][source]]==-1)
+                if(path[i][source] != -1 && brr[path[i][source]] == -1)
                 {
                     brr[path[i][source]]++;
                     source=path[i][source];
@@ -221,23 +223,22 @@ namespace traveling_salesman
 
     double Dynamic::tsd(int mask, int source)
     {
-        if(mask==visited)
+        if(mask == visited)
         {
-            return matrix[source][pos];
+            return graph->get_conection(source, pos);
         }
         else if (dp[mask][source]!=-1)
         {
             return dp[mask][source];
 
         }
-        double ans=DBL_MAX, minAns=0, k;
+        double ans = DBL_MAX, minAns = 0, k;
         int i;
-        for(i=0;i<size;i++)
+        for(i = 0; i < size; i++)
         {
-
-            if((mask&(1<<i))==0)
+            if((mask&(1 << i)) == 0)
             {
-                minAns=matrix[source][i]+tsd(mask|(1<<i),i);
+                minAns = graph->get_conection(source, i) + tsd(mask|(1<<i),i);
                 if(ans>minAns)
                 {
                     ans=minAns;
@@ -259,17 +260,22 @@ namespace traveling_salesman
     void Dynamic::run(int input_size)
     {
         size = input_size;
+
         double cost = 0;
         int mask;
+
         visited = (1 << size) - 1;
         start();
-        Graph graph = InputManager::read_graph_in_file(input_size);
-        matrix = graph.matrix;
+
+        graph = InputManager::read_graph_in_file(input_size);
         pos = 0;
         mask = 1 << pos;
+
         Timer timer;
+
         timer.start();
         cost = tsd(mask,pos);
+
         TSPResult result(input_size, cost, display_path(0), timer.stop());
         result.show_result("dynamic_programming");
 
@@ -330,7 +336,7 @@ namespace traveling_salesman
             bool found = false;
             City bcity = b.get_city(i);
             for(auto city : child_cities){
-                if(city != nullptr && city->id == bcity.id){
+                if(city != nullptr && *city == bcity){
                     found = true;
                     break;
                 }

@@ -9,13 +9,19 @@ namespace traveling_salesman
 {
     class Graph
     {
-        public:
-            double **matrix;
+        private:
+            vector<vector<double>> *matrix;
             int size;
+            double default_value = 0.0;
             int vertex_count;
+        public:
             vector<Point> points;
-            Graph(int);
+            Graph(int size);
             ~Graph();
+            int get_size();
+            double get_conection(int v1, int v2);
+            void set_conection(int v1, int v2, double value);
+            void del_conection(int v1, int v2);
             void add_point(Point);
     };
 }
