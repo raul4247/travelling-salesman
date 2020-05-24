@@ -199,7 +199,7 @@ namespace traveling_salesman
             ofstream outputCSV;
             string algorithm_name = "branch_and_bound";
             outputCSV.open(OUTPUT_CSV_PATH(algorithm_name), ios::out | ios::app);
-            stringstream stream;
+            std::stringstream stream;
             stream << std::fixed << std::setprecision(7) << ((sum / SAMPLES) / 1000000.0);
             string time = stream.str();
             replace(time.begin(), time.end(), '.', ',');

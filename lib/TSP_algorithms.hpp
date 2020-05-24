@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cfloat>
+#include <sstream>
 #include "../lib/input_manager.hpp"
 #include "../lib/timer.hpp"
 #include "../lib/graph.hpp"

@@ -5,7 +5,7 @@ namespace traveling_salesman
     Graph::Graph(int size)
     {
         this->size = size;
-        this->matrix = new vector<vector<double>>(size, vector<double>(size, default_value));
+        this->matrix = new vector<vector<double> >(size, vector<double>(size, default_value));
         vertex_count = 0;
     }
 

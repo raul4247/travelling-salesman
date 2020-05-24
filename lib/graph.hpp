@@ -10,7 +10,7 @@ namespace traveling_salesman
     class Graph
     {
         private:
-            vector<vector<double>> *matrix;
+            vector<vector<double> > *matrix;
             int size;
             double default_value = 0.0;
             int vertex_count;
