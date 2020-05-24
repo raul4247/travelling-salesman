@@ -11,7 +11,8 @@ using City = traveling_salesman::Point;
 
 namespace genetic
 {
-    default_random_engine TravelRoute::rng {std::random_device{}()};
+    std::random_device rd;
+    default_random_engine TravelRoute::rng(rd());
 
     TravelRoute::TravelRoute(vector<City> cities)
     {
@@ -100,7 +101,7 @@ namespace genetic
 
     int TravelRoute::size()
     {
-        int size {};
+        int size = 0;
         if(this->route != nullptr)
             size = this->route->size();
         return size;

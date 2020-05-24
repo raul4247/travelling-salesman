@@ -345,10 +345,16 @@ namespace traveling_salesman
         }
     }
 
+    const double Genetic::mutation_rate = 0.015;
+    const int Genetic::tournament_size = 5;
+    const int Genetic::population_size = 50;
+    const int Genetic::generations = 100;
+    const bool Genetic::elitism = true;
+
     Population Genetic::evolve_population(Population p)
     {
         Population next_gen(p.size());
-        int elitism_offset{};
+        int elitism_offset = 0;
 
         // Manter a melhor rota, se elitism estiver habilitado
         if (elitism)
