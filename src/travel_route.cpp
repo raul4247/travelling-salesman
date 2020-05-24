@@ -60,7 +60,7 @@ namespace genetic
             double distance = this->get_distance();
             if(distance > 0)
             {
-                this->fitness = 1/distance;
+                this->fitness = 1 / distance;
             }
         }
         return this->fitness;
