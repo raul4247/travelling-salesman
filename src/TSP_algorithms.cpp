@@ -199,7 +199,7 @@ namespace traveling_salesman
             ofstream outputCSV;
             string algorithm_name = "branch_and_bound";
             outputCSV.open(OUTPUT_CSV_PATH(algorithm_name), ios::out | ios::app);
-            stringstream stream;
+            std::stringstream stream;
             stream << std::fixed << std::setprecision(7) << ((sum / SAMPLES) / 1000000.0);
             string time = stream.str();
             replace(time.begin(), time.end(), '.', ',');
@@ -344,10 +344,16 @@ namespace traveling_salesman
         }
     }
 
+    const double Genetic::mutation_rate = 0.015;
+    const int Genetic::tournament_size = 5;
+    const int Genetic::population_size = 50;
+    const int Genetic::generations = 100;
+    const bool Genetic::elitism = true;
+
     Population Genetic::evolve_population(Population p)
     {
         Population next_gen(p.size());
-        int elitism_offset{};
+        int elitism_offset = 0;
 
         // Manter a melhor rota, se elitism estiver habilitado
         if (elitism)

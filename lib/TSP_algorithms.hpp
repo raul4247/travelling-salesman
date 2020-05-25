@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cfloat>
+#include <sstream>
 #include "../lib/input_manager.hpp"
 #include "../lib/timer.hpp"
 #include "../lib/graph.hpp"
@@ -85,12 +86,12 @@ namespace traveling_salesman
     class Genetic
     {
         private:
-            static constexpr double mutation_rate = 0.015;
-            static constexpr int tournament_size = 5;
-            static constexpr int population_size = 50;
-            static constexpr int generations = 100;
+            static const double mutation_rate;
+            static const int tournament_size;
+            static const int population_size;
+            static const int generations;
             // Manter a melhor rota a cada chamada de evolve_population
-            static constexpr bool elitism = true;
+            static const bool elitism;
             static Population evolve_population(Population p);
             static TravelRoute crossover(TravelRoute a, TravelRoute b);
             static void mutate(TravelRoute &tr);
