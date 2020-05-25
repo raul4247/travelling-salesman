@@ -208,16 +208,7 @@ namespace traveling_salesman
         }
     }
 
-    double Dynamic::weigth_of_path(int *path, int size)
-    {
-        double weight = 0.0;
 
-        for (int i = 1; i < size; i++)
-            weight += graph->get_conection(path[i], path[i - 1]);
-        weight += graph->get_conection(path[size - 1], 0);
-
-        return weight;
-    }
 
     void Dynamic::start()
     {
@@ -246,8 +237,8 @@ namespace traveling_salesman
         {
             brr[i] = -1;
         }
-        int *arrya = new int[size];
-        arrya[0] = 0;
+        int *array = new int[size];
+        array[0] = 0;
         while (count < size)
         {
             for (i = 0; i < (1 << size); i++)
@@ -256,22 +247,24 @@ namespace traveling_salesman
                 {
                     brr[path[i][source]]++;
                     source = path[i][source];
-                    arrya[count] = source;
+                    array[count] = source;
                     count++;
 
                     break;
                 }
             }
         }
-        return arrya;
+        return array;
     }
 
     double Dynamic::tsd(int mask, int source)
     {
+        // Nesse if verificamos se todos os vertices foram visitados, usando operação bit a bit
         if (mask == visited)
         {
             return graph->get_conection(source, pos);
         }
+        // Se entrar no if ja possuimos a distancia calculada e o custo para descobrir ela é O(1) 
         else if (dp[mask][source] != -1)
         {
             return dp[mask][source];
@@ -280,9 +273,12 @@ namespace traveling_salesman
         int i;
         for(i = 0; i < size; i++)
         {
+            // Caso eu esteja visitando a propria cidade ou ela ja foi visitada, não preciso continuar no algoritmo posso pular.
             if((mask&(1 << i)) == 0)
             {
+                // Chamada recursiva, com uma operação bit a bit , que quer dizer que pego a cidade atual e somo com a proxima mostrando que as duas foram visitadas.
                 minAns = graph->get_conection(source, i) + tsd(mask|(1<<i),i);
+                // Caso eu consiga uma distancia menor tenho que atualizar a minha distancia.
                 if(ans > minAns)
                 {
                     ans = minAns;
@@ -290,8 +286,11 @@ namespace traveling_salesman
                 }
             }
         }
+        //Colocando em um vetor a cidade que consegui o menor caminho.
         path[mask][source] = k;
+        //  Colocando a minha menor distancia na minha matrix aux
         dp[mask][source] = ans;
+        //Retornando a menor distancia para ser atualizada
         return dp[mask][source];
     }
 

@@ -52,22 +52,33 @@ namespace traveling_salesman
     class Dynamic
     {
         private:
-            double weigth_of_path(int *path, int size);
+
+            // algoritmo que calcula de forma dinamica o menor caminho
             double tsd(int mask, int pos);
+            // O metodo a seguir inicializa as estruturas que vamos usar para calcular o menor caminho
             void start();
+            // O metodo a seguir coloca em um vetor o menor caminho encontrado pelo algoritmo.
             int* display_path(int source);
             Graph* graph;
 
         public:
-            double min_dist;
+            // Matrix onde estara armazenado o menor caminho que o algoritmo ira encontrar
             int **path;
+            // Variavel para guardar o valor da menor distancia
             double min_path;
+            // Variavel que guardar a quantidade das minhas cidades
             int size;
+            // Matrix auxiliar para calcular o menor caminho 
             double **dp;
+            // Variavel para guardar a posicao em que estou(a cidade atual)
             int pos;
+            // Variavel que marcar que ja visitei a cidade
             int visited;
+            
             long long run(int);
+            // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin.
             void run_in_range(int, int);
+            // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin colocando em uma arquivo os dados para estatitica.
             void run_in_range_statistic(int, int);
     };
 
