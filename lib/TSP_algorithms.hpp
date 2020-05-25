@@ -34,6 +34,7 @@ namespace traveling_salesman
             double min_dist;
             // Vetor que armazena o melhor caminho a ser percorrido.
             int *min_path;
+
             llong run(int);
             // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin.
             void run_in_range(int, int);
@@ -57,12 +58,8 @@ namespace traveling_salesman
             double min_dist;
             // Vetor que armazena o melhor caminho a ser percorrido.
             int *min_path;
-<<<<<<< HEAD
-            long long run(int);
-=======
         
             llong run(int);
->>>>>>> eb6aa8eaa58013f6c13b5042c69d03c0255675cf
             // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin.
             void run_in_range(int, int);
             // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin colocando em uma arquivo os dados para estatitica.
