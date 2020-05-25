@@ -13,6 +13,7 @@
 #include "../lib/population.hpp"
 
 #define SAMPLES 10
+#define llong long long
 
 using genetic::TravelRoute;
 using genetic::Population;
@@ -29,7 +30,7 @@ namespace traveling_salesman
         public:
             double min_dist;
             int *min_path;
-            long long run(int);
+            llong run(int);
             void run_in_range(int, int);
             void run_in_range_statistic(int, int);
     };
@@ -45,7 +46,7 @@ namespace traveling_salesman
             double lower_bound;
             double min_dist;
             int *min_path;
-            long long run(int);
+            llong run(int);
             void run_in_range(int, int);
             void run_in_range_statistic(int, int);
     };
@@ -69,14 +70,14 @@ namespace traveling_salesman
             double min_path;
             // Variavel que guardar a quantidade das minhas cidades
             int size;
-            // Matrix auxiliar para calcular o menor caminho 
+            // Matrix auxiliar para calcular o menor caminho
             double **dp;
             // Variavel para guardar a posicao em que estou(a cidade atual)
             int pos;
             // Variavel que marcar que ja visitei a cidade
             int visited;
-            
-            long long run(int);
+
+            llong run(int);
             // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin.
             void run_in_range(int, int);
             // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin colocando em uma arquivo os dados para estatitica.
@@ -86,18 +87,26 @@ namespace traveling_salesman
     class Genetic
     {
         private:
+            // Taxa de mutação, esse valor deve estar entre 0 e 1, e deve ser pequeno.
             static const double mutation_rate;
+            // Tamanho da populacao criada para a seleçao por torneio.
             static const int tournament_size;
+            // Tamanho da populacao cobaia.
             static const int population_size;
+            // Número de gerações de populações.
             static const int generations;
             // Manter a melhor rota a cada chamada de evolve_population
             static const bool elitism;
+            // Evolui uma população, realizando os passos da selecao natural.
             static Population evolve_population(Population p);
+            // Faz o cruzamento de duas rotas.
             static TravelRoute crossover(TravelRoute a, TravelRoute b);
+            // Realiza a mutação em uma rota
             static void mutate(TravelRoute &tr);
+            // Faz a selecao por torneio.
             static TravelRoute tournament_selection(Population p);
         public:
-            long long run(int);
+            llong run(int);
             void run_in_range(int, int);
             void run_in_range_statistic(int, int);
     };

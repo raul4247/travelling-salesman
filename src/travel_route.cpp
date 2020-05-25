@@ -71,6 +71,7 @@ namespace genetic
     {
         if(this->route != nullptr)
         {
+            // "Bagunça" o array randomicamente.
             shuffle(this->route->begin() + 1, this->route->end(), this->rng);
             this->distance = 0.0;
             this->fitness = 0.0;
