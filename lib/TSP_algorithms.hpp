@@ -22,31 +22,46 @@ namespace traveling_salesman
     class BruteForce
     {
         private:
+            //Pega o vetor de min_path e calcula a soma de todas as posições.
             double weigth_of_path(int *path, int size);
+            // Metodo que calcula todas os caminhos possíveis.
             void permutation(int *arr, int i, int n);
             Graph* graph;
 
         public:
+            //Variavel que guarda o valor da menor distancia calculada pela brute force
             double min_dist;
+            // Vetor que armazena o melhor caminho a ser percorrido.
             int *min_path;
+
             long long run(int);
+            // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin.
             void run_in_range(int, int);
+            // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin colocando em uma arquivo os dados para estatitica.
             void run_in_range_statistic(int, int);
     };
 
     class BranchAndBound
     {
         private:
+            //Pega o vetor de min_path e calcula a soma de todas as posições.
             double weigth_of_path(int *path, int size);
+            // Metodo que calcula todas os caminhos possíveis.
             void permutation(int *arr, int i, int n);
             double calculate_lower_bound(int n);
             Graph* graph;
         public:
+            // Variavel para armazenar o limite minino 
             double lower_bound;
+            //Variavel que guarda o valor da menor distancia calculada pela brute force
             double min_dist;
+            // Vetor que armazena o melhor caminho a ser percorrido.
             int *min_path;
+        
             long long run(int);
+            // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin.
             void run_in_range(int, int);
+            // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin colocando em uma arquivo os dados para estatitica.
             void run_in_range_statistic(int, int);
     };
 
