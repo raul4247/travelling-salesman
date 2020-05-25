@@ -1,4 +1,4 @@
-CFLAGS = -O2
+CFLAGS = -O2 -w
 CC = g++
 
 SOURCE_PATH = src/

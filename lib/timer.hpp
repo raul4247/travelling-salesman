@@ -13,11 +13,13 @@ namespace traveling_salesman
     {
         public:
             high_resolution_clock::time_point begin, end;
+            // Inicia o timer em um trecho de código.
             void start()
             {
                 Timer::begin = high_resolution_clock::now();
             }
 
+            // Termina o timer e retorna o tempo gasto.
             long long stop()
             {
                 Timer::end = high_resolution_clock::now();

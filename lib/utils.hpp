@@ -6,6 +6,7 @@ namespace traveling_salesman
     class Utils
     {
         public:
+            // Faz cópia de arrays
             static int *copy_arr(int *, int);
     };
 }

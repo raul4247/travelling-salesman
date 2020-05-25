@@ -30,7 +30,9 @@ namespace traveling_salesman
             double min_dist;
             int *min_path;
             long long run(int);
+            // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin.
             void run_in_range(int, int);
+            // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin colocando em uma arquivo os dados para estatitica.
             void run_in_range_statistic(int, int);
     };
 
@@ -46,7 +48,9 @@ namespace traveling_salesman
             double min_dist;
             int *min_path;
             long long run(int);
+            // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin.
             void run_in_range(int, int);
+            // O metodo que executa nosso algoritmo x vezes, sendo esse x a diferença de end e begin colocando em uma arquivo os dados para estatitica.
             void run_in_range_statistic(int, int);
     };
 
